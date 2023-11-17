@@ -1,11 +1,14 @@
 import { useState } from "react";
 import Alert from "./components/Alert";
 import Button from "./components/Button";
+import ListGroup from "./components/ListGroup";
 
 function App() {
   const [showAlert, setShowAlert] = useState(false);
 
   const toggleAlert = () => setShowAlert(!showAlert);
+
+  const cities = ["New York", "Paris", "Rome", "London", "Tokyo", "Sydney"];
 
   return (
     <div>
@@ -18,6 +21,11 @@ function App() {
       <Button color="dark" onClick={toggleAlert}>
         Click me
       </Button>
+      <ListGroup
+        items={cities}
+        heading={"Cities"}
+        onItemSelect={function (item: string): void {}}
+      />
     </div>
   );
 }
