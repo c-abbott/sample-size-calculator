@@ -8,7 +8,7 @@ function App() {
 
   const toggleAlert = () => setShowAlert(!showAlert);
 
-  const cities = ["New York", "Paris", "Rome", "London", "Tokyo", "Sydney"];
+  const cities = ["New York", "Paris", "Rome", "London", "Tokyo", "Sydney", "Melbourne", "Reykjavík"];
 
   return (
     <div>
