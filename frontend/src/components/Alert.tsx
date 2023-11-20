@@ -8,7 +8,7 @@ interface AlertProps {
 const Alert = ({ children, onClose }: AlertProps) => {
   return (
     <div
-      className="alert alert-warning alert-dismissible fade show"
+      className="alert alert-primary alert-dismissible fade show"
       role="alert"
     >
       {children}
