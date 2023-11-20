@@ -18,7 +18,7 @@ function App() {
           fields below.
         </Alert>
       )}
-      <Button color="dark" onClick={toggleAlert}>
+      <Button color="primary" onClick={toggleAlert}>
         Click me
       </Button>
       <ListGroup
