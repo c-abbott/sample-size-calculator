@@ -2,21 +2,20 @@ import React, { useState, useEffect } from "react";
 import { calculateSampleSize } from "../utils/calculations";
 
 const ZTestSampleSizeCalculator: React.FC = () => {
-  const [delta, setDelta] = useState<string>("0.2");
-  const [avg, setAvg] = useState<string>("50");
-  const [sd, setSd] = useState<string>("15");
-  const [alpha, setAlpha] = useState<string>("0.05");
-  const [beta, setBeta] = useState<string>("0.2");
+  const [delta, setDelta] = useState<string>("5"); // MDE as percentage
+  const [avg, setAvg] = useState<string>("100");
+  const [sd, setSd] = useState<string>("5");
+  const [alpha, setAlpha] = useState<string>("5"); 
+  const [power, setPower] = useState<string>("80"); 
   const [sampleSize, setSampleSize] = useState<number | null>(null);
 
   useEffect(() => {
-    const numDelta = parseFloat(delta) || NaN;
+    const numDelta = parseFloat(delta) / 100 || NaN;
     const numAvg = parseFloat(avg) || NaN;
     const numSd = parseFloat(sd) || NaN;
-    const numAlpha = parseFloat(alpha) || NaN;
-    const numBeta = parseFloat(beta) || NaN;
-
-    // Check if all values are numbers before calling calculateSampleSize
+    const numAlpha = parseFloat(alpha) / 100 || NaN; // Convert alpha to decimal
+    const numBeta = 1 - (parseFloat(power) / 100) || NaN; // Convert beta to decimal
+    console.log(numDelta, numAvg, numSd, numAlpha, numBeta)
     if (
       !isNaN(numDelta) &&
       !isNaN(numAvg) &&
@@ -33,18 +32,18 @@ const ZTestSampleSizeCalculator: React.FC = () => {
       );
       setSampleSize(size);
     } else {
-      setSampleSize(null); // Reset sample size if any value is not a number
+      setSampleSize(null);
     }
-  }, [delta, avg, sd, alpha, beta]); // Recalculate whenever these values change
+  }, [delta, avg, sd, alpha, power]);
 
   return (
     <div className="space-y-4">
       <div>
         <label className="block">
-          Delta (Minimum Detectable Effect):
+          Delta (Minimum Detectable Effect as %):
           <input
             type="text"
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-400 focus:ring-opacity-50"
             value={delta}
             onChange={(e) => setDelta(e.target.value)}
           />
@@ -77,7 +76,7 @@ const ZTestSampleSizeCalculator: React.FC = () => {
 
       <div>
         <label className="block">
-          Significance Level (alpha):
+          Significance Level (alpha as %):
           <input
             type="text"
             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -89,16 +88,17 @@ const ZTestSampleSizeCalculator: React.FC = () => {
 
       <div>
         <label className="block">
-          Power (1 - beta):
+          Power (1 - beta as %):
           <input
             type="text"
             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            value={beta}
-            onChange={(e) => setBeta(e.target.value)}
+            value={power}
+            onChange={(e) => setPower(e.target.value)}
           />
         </label>
       </div>
 
+      {/* Display Calculated Sample Size */}
       {sampleSize !== null && (
         <div className="mt-3">
           <strong>Calculated Sample Size:</strong> {sampleSize.toFixed(2)}
