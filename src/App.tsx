@@ -5,7 +5,7 @@ function App() {
 
   return (
     <div>
-      <Title text="Z Test"/>
+      <Title text="Z Test (Continuous Normally Distributed Variable)"/>
       <ZTestSampleSizeCalculator />
     </div>
   );
