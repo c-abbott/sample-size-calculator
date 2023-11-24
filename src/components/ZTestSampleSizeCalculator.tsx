@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+
 import { calculateSampleSize } from "../utils/calculations";
+import ParameterInputCard from "./ParameterInputCard";
 
 const ZTestSampleSizeCalculator: React.FC = () => {
   const [delta, setDelta] = useState<string>("5"); // MDE as percentage
@@ -38,41 +40,21 @@ const ZTestSampleSizeCalculator: React.FC = () => {
 
   return (
     <div className="space-y-4">
-      <div>
-        <label className="block">
-          Delta (Minimum Detectable Effect as %):
-          <input
-            type="text"
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-400 focus:ring-opacity-50"
-            value={delta}
-            onChange={(e) => setDelta(e.target.value)}
-          />
-        </label>
-      </div>
-
-      <div>
-        <label className="block">
-          Average Value (avg):
-          <input
-            type="text"
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            value={avg}
-            onChange={(e) => setAvg(e.target.value)}
-          />
-        </label>
-      </div>
-
-      <div>
-        <label className="block">
-          Standard Deviation (sd):
-          <input
-            type="text"
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            value={sd}
-            onChange={(e) => setSd(e.target.value)}
-          />
-        </label>
-      </div>
+    <ParameterInputCard
+      label="Delta (Minimum Detectable Effect as %):"
+      value={delta}
+      onChange={(e) => setDelta(e.target.value)}
+    />
+    <ParameterInputCard
+      label="Average Value (avg):"
+      value={avg}
+      onChange={(e) => setAvg(e.target.value)}
+    />
+    <ParameterInputCard
+      label="Standard Deviation (sd):"
+      value={sd}
+      onChange={(e) => setSd(e.target.value)}
+    />
 
       <div>
         <label className="block">
