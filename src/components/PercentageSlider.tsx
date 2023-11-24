@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export interface PercentageSliderProps {
   label: string;
@@ -6,7 +6,11 @@ export interface PercentageSliderProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const PercentageSlider: React.FC<PercentageSliderProps> = ({ label, value, onChange }) => {
+const PercentageSlider: React.FC<PercentageSliderProps> = ({
+  label,
+  value,
+  onChange,
+}) => {
   return (
     <div className="p-4 bg-white shadow-lg rounded-lg">
       <label className="block text-sm font-medium text-gray-700">{label}</label>

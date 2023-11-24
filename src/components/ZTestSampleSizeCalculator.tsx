@@ -8,8 +8,8 @@ const ZTestSampleSizeCalculator: React.FC = () => {
   const [delta, setDelta] = useState<string>("5"); // MDE as percentage
   const [avg, setAvg] = useState<string>("100");
   const [sd, setSd] = useState<string>("5");
-  const [alpha, setAlpha] = useState<string>("5"); 
-  const [power, setPower] = useState<string>("80"); 
+  const [alpha, setAlpha] = useState<string>("5");
+  const [power, setPower] = useState<string>("80");
   const [sampleSize, setSampleSize] = useState<number | null>(null);
 
   useEffect(() => {
@@ -17,8 +17,8 @@ const ZTestSampleSizeCalculator: React.FC = () => {
     const numAvg = parseFloat(avg) || NaN;
     const numSd = parseFloat(sd) || NaN;
     const numAlpha = parseFloat(alpha) / 100 || NaN; // Convert alpha to decimal
-    const numBeta = 1 - (parseFloat(power) / 100) || NaN; // Convert beta to decimal
-    console.log(numDelta, numAvg, numSd, numAlpha, numBeta)
+    const numBeta = 1 - parseFloat(power) / 100 || NaN; // Convert beta to decimal
+    console.log(numDelta, numAvg, numSd, numAlpha, numBeta);
     if (
       !isNaN(numDelta) &&
       !isNaN(numAvg) &&
@@ -66,7 +66,7 @@ const ZTestSampleSizeCalculator: React.FC = () => {
         value={power}
         onChange={(e) => setPower(e.target.value)}
       />
-  
+
       {/* Display Calculated Sample Size */}
       {sampleSize !== null && (
         <div className="mt-3">
