@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { calculateSampleSize } from "../utils/calculations";
 import ParameterInputCard from "./ParameterInputCard";
+import PercentageSlider from "./PercentageSlider";
 
 const ZTestSampleSizeCalculator: React.FC = () => {
   const [delta, setDelta] = useState<string>("5"); // MDE as percentage
@@ -40,46 +41,32 @@ const ZTestSampleSizeCalculator: React.FC = () => {
 
   return (
     <div className="space-y-4">
-    <ParameterInputCard
-      label="Delta (Minimum Detectable Effect as %):"
-      value={delta}
-      onChange={(e) => setDelta(e.target.value)}
-    />
-    <ParameterInputCard
-      label="Average Value (avg):"
-      value={avg}
-      onChange={(e) => setAvg(e.target.value)}
-    />
-    <ParameterInputCard
-      label="Standard Deviation (sd):"
-      value={sd}
-      onChange={(e) => setSd(e.target.value)}
-    />
-
-      <div>
-        <label className="block">
-          Significance Level (alpha as %):
-          <input
-            type="text"
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            value={alpha}
-            onChange={(e) => setAlpha(e.target.value)}
-          />
-        </label>
-      </div>
-
-      <div>
-        <label className="block">
-          Power (1 - beta as %):
-          <input
-            type="text"
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            value={power}
-            onChange={(e) => setPower(e.target.value)}
-          />
-        </label>
-      </div>
-
+      <ParameterInputCard
+        label="Delta (Minimum Detectable Effect as %):"
+        value={delta}
+        onChange={(e) => setDelta(e.target.value)}
+      />
+      <ParameterInputCard
+        label="Average Value (avg):"
+        value={avg}
+        onChange={(e) => setAvg(e.target.value)}
+      />
+      <ParameterInputCard
+        label="Standard Deviation (sd):"
+        value={sd}
+        onChange={(e) => setSd(e.target.value)}
+      />
+      <PercentageSlider
+        label="Significance Level (alpha as %):"
+        value={alpha}
+        onChange={(e) => setAlpha(e.target.value)}
+      />
+      <PercentageSlider
+        label="Power (1 - beta as %):"
+        value={power}
+        onChange={(e) => setPower(e.target.value)}
+      />
+  
       {/* Display Calculated Sample Size */}
       {sampleSize !== null && (
         <div className="mt-3">
