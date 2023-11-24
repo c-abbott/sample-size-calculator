@@ -1,21 +1,42 @@
 import React, { useState, useEffect } from "react";
+
 import { calculateSampleSize } from "../utils/calculations";
+import ParameterInputCard from "./ParameterInputCard";
+import PercentageSlider from "./PercentageSlider";
 
 const ZTestSampleSizeCalculator: React.FC = () => {
   const [delta, setDelta] = useState<string>("5"); // MDE as percentage
   const [avg, setAvg] = useState<string>("100");
   const [sd, setSd] = useState<string>("5");
-  const [alpha, setAlpha] = useState<string>("5"); 
-  const [power, setPower] = useState<string>("80"); 
+  const [alpha, setAlpha] = useState<string>("5");
+  const [power, setPower] = useState<string>("80");
   const [sampleSize, setSampleSize] = useState<number | null>(null);
+  const [mdeType, setMdeType] = useState<string>("uplift");
+  const mdeTypeOptions = {
+    uplift: "Uplift",
+    exactValue: "Exact Value Increase",
+  };
 
   useEffect(() => {
-    const numDelta = parseFloat(delta) / 100 || NaN;
     const numAvg = parseFloat(avg) || NaN;
     const numSd = parseFloat(sd) || NaN;
     const numAlpha = parseFloat(alpha) / 100 || NaN; // Convert alpha to decimal
-    const numBeta = 1 - (parseFloat(power) / 100) || NaN; // Convert beta to decimal
-    console.log(numDelta, numAvg, numSd, numAlpha, numBeta)
+    const numBeta = 1 - parseFloat(power) / 100 || NaN; // Convert beta to decimal
+    let numDelta;
+
+    switch (mdeType) {
+      case "uplift":
+        // Delta as a percentage of the mean
+        numDelta = parseFloat(delta) / 100 || NaN;
+        break;
+      case "exactValue":
+        // Delta as an exact value increase
+        numDelta = (parseFloat(delta) / numAvg) * 100 || NaN;
+        break;
+      default:
+        numDelta = NaN; // Fallback case
+    }
+
     if (
       !isNaN(numDelta) &&
       !isNaN(numAvg) &&
@@ -34,69 +55,39 @@ const ZTestSampleSizeCalculator: React.FC = () => {
     } else {
       setSampleSize(null);
     }
-  }, [delta, avg, sd, alpha, power]);
+  }, [delta, avg, sd, alpha, power, mdeType]); // Include mdeType in dependency array
 
   return (
     <div className="space-y-4">
-      <div>
-        <label className="block">
-          Delta (Minimum Detectable Effect as %):
-          <input
-            type="text"
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-400 focus:ring-opacity-50"
-            value={delta}
-            onChange={(e) => setDelta(e.target.value)}
-          />
-        </label>
-      </div>
-
-      <div>
-        <label className="block">
-          Average Value (avg):
-          <input
-            type="text"
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            value={avg}
-            onChange={(e) => setAvg(e.target.value)}
-          />
-        </label>
-      </div>
-
-      <div>
-        <label className="block">
-          Standard Deviation (sd):
-          <input
-            type="text"
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            value={sd}
-            onChange={(e) => setSd(e.target.value)}
-          />
-        </label>
-      </div>
-
-      <div>
-        <label className="block">
-          Significance Level (alpha as %):
-          <input
-            type="text"
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            value={alpha}
-            onChange={(e) => setAlpha(e.target.value)}
-          />
-        </label>
-      </div>
-
-      <div>
-        <label className="block">
-          Power (1 - beta as %):
-          <input
-            type="text"
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            value={power}
-            onChange={(e) => setPower(e.target.value)}
-          />
-        </label>
-      </div>
+      <ParameterInputCard
+        label="Delta (Minimum Detectable Effect):"
+        value={delta}
+        onChange={(e) => setDelta(e.target.value)}
+        isMDE
+        mdeType={mdeType}
+        setMdeType={setMdeType}
+        mdeTypeOptions={mdeTypeOptions}
+      />
+      <ParameterInputCard
+        label="Average Value (avg):"
+        value={avg}
+        onChange={(e) => setAvg(e.target.value)}
+      />
+      <ParameterInputCard
+        label="Standard Deviation (sd):"
+        value={sd}
+        onChange={(e) => setSd(e.target.value)}
+      />
+      <PercentageSlider
+        label="Significance Level (alpha as %):"
+        value={alpha}
+        onChange={(e) => setAlpha(e.target.value)}
+      />
+      <PercentageSlider
+        label="Power (1 - beta as %):"
+        value={power}
+        onChange={(e) => setPower(e.target.value)}
+      />
 
       {/* Display Calculated Sample Size */}
       {sampleSize !== null && (
