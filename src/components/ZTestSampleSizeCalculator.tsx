@@ -14,7 +14,7 @@ const ZTestSampleSizeCalculator: React.FC = () => {
   const [mdeType, setMdeType] = useState<string>("uplift");
   const mdeTypeOptions = {
     uplift: "Uplift",
-    exactValue: "Exact Value Increase"
+    exactValue: "Exact Value Increase",
   };
 
   useEffect(() => {
@@ -25,11 +25,11 @@ const ZTestSampleSizeCalculator: React.FC = () => {
     let numDelta;
 
     switch (mdeType) {
-      case 'uplift':
+      case "uplift":
         // Delta as a percentage of the mean
-        numDelta = (parseFloat(delta) / 100) || NaN;
+        numDelta = parseFloat(delta) / 100 || NaN;
         break;
-      case 'exactValue':
+      case "exactValue":
         // Delta as an exact value increase
         numDelta = (parseFloat(delta) / numAvg) * 100 || NaN;
         break;
