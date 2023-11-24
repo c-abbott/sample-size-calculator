@@ -11,14 +11,32 @@ const ZTestSampleSizeCalculator: React.FC = () => {
   const [alpha, setAlpha] = useState<string>("5");
   const [power, setPower] = useState<string>("80");
   const [sampleSize, setSampleSize] = useState<number | null>(null);
+  const [mdeType, setMdeType] = useState<string>("uplift");
+  const mdeTypeOptions = {
+    uplift: "Uplift",
+    exactValue: "Exact Value Increase"
+  };
 
   useEffect(() => {
-    const numDelta = parseFloat(delta) / 100 || NaN;
     const numAvg = parseFloat(avg) || NaN;
     const numSd = parseFloat(sd) || NaN;
     const numAlpha = parseFloat(alpha) / 100 || NaN; // Convert alpha to decimal
     const numBeta = 1 - parseFloat(power) / 100 || NaN; // Convert beta to decimal
-    console.log(numDelta, numAvg, numSd, numAlpha, numBeta);
+    let numDelta;
+
+    switch (mdeType) {
+      case 'uplift':
+        // Delta as a percentage of the mean
+        numDelta = (parseFloat(delta) / 100) || NaN;
+        break;
+      case 'exactValue':
+        // Delta as an exact value increase
+        numDelta = (parseFloat(delta) / numAvg) * 100 || NaN;
+        break;
+      default:
+        numDelta = NaN; // Fallback case
+    }
+
     if (
       !isNaN(numDelta) &&
       !isNaN(numAvg) &&
@@ -37,14 +55,18 @@ const ZTestSampleSizeCalculator: React.FC = () => {
     } else {
       setSampleSize(null);
     }
-  }, [delta, avg, sd, alpha, power]);
+  }, [delta, avg, sd, alpha, power, mdeType]); // Include mdeType in dependency array
 
   return (
     <div className="space-y-4">
       <ParameterInputCard
-        label="Delta (Minimum Detectable Effect as %):"
+        label="Delta (Minimum Detectable Effect):"
         value={delta}
         onChange={(e) => setDelta(e.target.value)}
+        isMDE
+        mdeType={mdeType}
+        setMdeType={setMdeType}
+        mdeTypeOptions={mdeTypeOptions}
       />
       <ParameterInputCard
         label="Average Value (avg):"
