@@ -26,12 +26,10 @@ const ZTestSampleSizeCalculator: React.FC = () => {
 
     switch (mdeType) {
       case "uplift":
-        // Delta as a percentage of the mean
         numDelta = parseFloat(delta) / 100 || NaN;
         break;
       case "exactValue":
-        // Delta as an exact value increase
-        numDelta = (parseFloat(delta) / numAvg) || NaN;
+        numDelta = parseFloat(delta) || NaN;
         break;
       default:
         numDelta = NaN; // Fallback case
@@ -49,7 +47,8 @@ const ZTestSampleSizeCalculator: React.FC = () => {
         numAvg,
         numSd,
         numAlpha,
-        numBeta
+        numBeta,
+        mdeType
       );
       setSampleSize(size);
     } else {
