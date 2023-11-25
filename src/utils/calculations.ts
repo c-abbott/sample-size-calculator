@@ -15,9 +15,17 @@ function calculateZScore(p: number): number {
   return z;
 }
 
-export function calculateSampleSize(delta: number, avg: number, sd: number, alpha: number, beta: number): number {
+export function calculateSampleSize(delta: number, avg: number, sd: number, alpha: number, beta: number, mdeType: string): number {
   const Za = calculateZScore(1 - alpha / 2);
   const Zb = calculateZScore(1 - beta);
-  const absDel = delta * avg;
+  let absDel;
+
+  if (mdeType === 'uplift') {
+    absDel = delta * avg;
+  } else {
+    absDel = delta;
+  }
+
   return 2 * Math.pow(Za + Zb, 2) * Math.pow(sd, 2) / Math.pow(absDel, 2);
 }
+
