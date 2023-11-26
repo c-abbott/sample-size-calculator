@@ -87,11 +87,15 @@ const ZTestSampleSizeCalculator: React.FC = () => {
             label="Alpha"
             value={alpha}
             onChange={(e) => setAlpha(e.target.value)}
+            min={1}
+            max={10}
           />
           <PercentageSlider
             label="Power"
             value={power}
             onChange={(e) => setPower(e.target.value)}
+            min={50}
+            max={100}
           />
         </div>
       </div>
