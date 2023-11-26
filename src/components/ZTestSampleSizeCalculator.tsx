@@ -57,8 +57,8 @@ const ZTestSampleSizeCalculator: React.FC = () => {
   }, [delta, avg, sd, alpha, power, mdeType]); // Include mdeType in dependency array
 
   return (
-    <div className="space-y-6 px-24 py-16">
-      <div className="bg-white p-6 shadow-lg rounded-lg">
+    <div className="space-y-6 px-8 py-10 bg-dark-900 text-primary">
+      <div className="bg-dark-800 p-6 shadow-md rounded-md">
         <div className="flex justify-center space-x-4">
           {/* ParameterInputCard components in a row */}
           <ParameterInputCard
@@ -83,7 +83,6 @@ const ZTestSampleSizeCalculator: React.FC = () => {
         </div>
 
         <div className="flex justify-center space-x-4 mt-4">
-          {/* PercentageSlider components in a row */}
           <PercentageSlider
             label="Alpha"
             value={alpha}
@@ -98,11 +97,13 @@ const ZTestSampleSizeCalculator: React.FC = () => {
       </div>
 
       {sampleSize !== null && (
-      <div className="mt-3 text-center p-4 bg-white shadow-lg rounded-lg">
-        <strong className="text-lg font-bold">Calculated Sample Size:</strong>
-        <div className="text-3xl font-bold">{Math.round(sampleSize)}</div>
-      </div>
-    )}
+        <div className="mt-3 text-center p-4 bg-dark-700 shadow-md rounded-md">
+          <strong className="text-lg font-bold text-accent">Sample Size</strong>
+          <div className="text-5xl font-extrabold text-primary">
+            {Math.round(sampleSize)}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

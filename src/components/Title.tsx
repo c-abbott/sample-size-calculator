@@ -16,9 +16,11 @@ const Title: React.FC<TitleProps> = ({
   const HeadingTag = level as keyof JSX.IntrinsicElements;
 
   return (
-    <div style={{ textAlign: "center", ...style }}>
-      <HeadingTag className="text-3xl font-bold underline">{text}</HeadingTag>
-      {subtitle && <p>{subtitle}</p>}
+    <div className="text-center" style={style}>
+      <HeadingTag className={`font-bold ${level === 'h1' ? 'text-4xl' : 'text-3xl'} text-primary`}>
+        {text}
+      </HeadingTag>
+      {subtitle && <p className="text-base text-accent mt-2">{subtitle}</p>}
     </div>
   );
 };

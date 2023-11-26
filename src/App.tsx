@@ -3,8 +3,8 @@ import ZTestSampleSizeCalculator from "./components/ZTestSampleSizeCalculator";
 
 function App() {
   return (
-    <div>
-      <Title text="Z Test (Continuous Normally Distributed Variable)" />
+    <div className="bg-dark-900 min-h-screen text-primary">
+      <Title text="Z Test" />
       <ZTestSampleSizeCalculator />
     </div>
   );
