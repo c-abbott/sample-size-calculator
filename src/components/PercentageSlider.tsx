@@ -19,8 +19,8 @@ const PercentageSlider: React.FC<PercentageSliderProps> = ({
   const percentage = ((parseFloat(value) - min) / (max - min)) * 100;
 
   return (
-    <div className="p-4 bg-dark-800 shadow-custom rounded-md border border-gray-500 opacity-80 hover:border-hover">
-      <label className="block text-sm font-medium text-primary mb-2">
+    <div className="p-4 bg-dark-800 shadow-custom rounded-md border border-gray-500 hover:border-hover">
+      <label className="block text-base text-primary mb-2">
         {label}
       </label>
       <input
@@ -34,7 +34,7 @@ const PercentageSlider: React.FC<PercentageSliderProps> = ({
           background: `linear-gradient(to right, #bcfd49 ${percentage}%, #333 ${percentage}%)`,
         }}
       />
-      <div className="text-right text-sm mt-1 text-primary">{value}%</div>
+      <div className="text-right text-base mt-1 text-primary">{value}%</div>
     </div>
   );
 };
