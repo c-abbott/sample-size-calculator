@@ -9,7 +9,7 @@ const ZTestSampleSizeCalculator: React.FC = () => {
   const [delta, setDelta] = useState<string>("5");
   const [avg, setAvg] = useState<string>("10000");
   const [sd, setSd] = useState<string>("902");
-  const [alpha, setAlpha] = useState<string>("5");
+  const [alpha, setAlpha] = useState<string>("10");
   const [power, setPower] = useState<string>("80");
   const [sampleSize, setSampleSize] = useState<number | null>(null);
 
@@ -38,7 +38,7 @@ const ZTestSampleSizeCalculator: React.FC = () => {
     } else {
       setSampleSize(null);
     }
-  }, [delta, avg, sd, alpha, power]); // Include mdeType in dependency array
+  }, [delta, avg, sd, alpha, power]);
 
   return (
     <div className="space-y-6 px-8 py-10 bg-dark-900 text-primary">
@@ -70,18 +70,16 @@ const ZTestSampleSizeCalculator: React.FC = () => {
             />
           </div>
         </div>
-
-        {/* Second Row: SampleSizeDisplay and PercentageSliders */}
-        <div className="flex justify-between gap-4">
-          <div className="flex-1 flex flex-col gap-4">
+{/* Second Row: SampleSizeDisplay and PercentageSliders */}
+<div className="grid grid-cols-3 gap-4">
+          <div className="col-span-2 flex flex-col gap-4">
             <PercentageSlider
               label="Alpha"
               value={alpha}
               onChange={(e) => setAlpha(e.target.value)}
               min={1}
-              max={10}
+              max={20}
             />
-
             <PercentageSlider
               label="Power"
               value={power}
@@ -90,7 +88,11 @@ const ZTestSampleSizeCalculator: React.FC = () => {
               max={100}
             />
           </div>
-          {sampleSize !== null && <SampleSizeDisplay sampleSize={sampleSize} />}
+          {sampleSize !== null && (
+            <div className="col-start-3">
+              <SampleSizeDisplay sampleSize={sampleSize} />
+            </div>
+          )}
         </div>
       </div>
     </div>
