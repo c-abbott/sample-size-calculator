@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { calculateSampleSize } from "../utils/calculations";
 import ParameterInputCard from "./ParameterInputCard";
 import PercentageSlider from "./PercentageSlider";
+import SampleSizeDisplay from "./SampleSizeDisplay";
+
 
 const ZTestSampleSizeCalculator: React.FC = () => {
   const [delta, setDelta] = useState<string>("5");
@@ -18,22 +20,11 @@ const ZTestSampleSizeCalculator: React.FC = () => {
   };
 
   useEffect(() => {
+    const numDelta = parseFloat(delta) / 100 || NaN;
     const numAvg = parseFloat(avg) || NaN;
     const numSd = parseFloat(sd) || NaN;
     const numAlpha = parseFloat(alpha) / 100 || NaN;
     const numBeta = 1 - parseFloat(power) / 100 || NaN;
-    let numDelta;
-
-    switch (mdeType) {
-      case "uplift":
-        numDelta = parseFloat(delta) / 100 || NaN;
-        break;
-      case "exactValue":
-        numDelta = parseFloat(delta) || NaN;
-        break;
-      default:
-        numDelta = NaN; // Fallback case
-    }
 
     if (
       !isNaN(numDelta) &&
@@ -59,55 +50,56 @@ const ZTestSampleSizeCalculator: React.FC = () => {
   return (
     <div className="space-y-6 px-8 py-10 bg-dark-900 text-primary">
       <div className="bg-dark-800 p-6 shadow-md rounded-md">
-        <div className="flex justify-center space-x-4">
-          {/* ParameterInputCard components in a row */}
-          <ParameterInputCard
-            label="MDE"
-            value={delta}
-            onChange={(e) => setDelta(e.target.value)}
-            isMDE
-            mdeType={mdeType}
-            setMdeType={setMdeType}
-            mdeTypeOptions={mdeTypeOptions}
-          />
-          <ParameterInputCard
-            label="Mean"
-            value={avg}
-            onChange={(e) => setAvg(e.target.value)}
-          />
-          <ParameterInputCard
-            label="Standard Deviation"
-            value={sd}
-            onChange={(e) => setSd(e.target.value)}
-          />
+        <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex-1 min-w-0">
+            <ParameterInputCard
+              label="MDE"
+              value={delta}
+              onChange={(e) => setDelta(e.target.value)}
+              parameterContext="The change in the mean you're trying to measure, also known as the minimum detectable effect"
+            />
+          </div>
+          <div className="flex-1 min-w-0">
+            <ParameterInputCard
+              label="Mean"
+              value={avg}
+              onChange={(e) => setAvg(e.target.value)}
+              parameterContext="The baseline mean of the metric you're trying to measure"
+            />
+          </div>
+          <div className="flex-1 min-w-0">
+            <ParameterInputCard
+              label="Standard Deviation"
+              value={sd}
+              onChange={(e) => setSd(e.target.value)}
+              parameterContext="The baseline standard deviation of the metric you're trying to measure"
+            />
+          </div>
         </div>
 
-        <div className="flex justify-center space-x-4 mt-4">
-          <PercentageSlider
-            label="Alpha"
-            value={alpha}
-            onChange={(e) => setAlpha(e.target.value)}
-            min={1}
-            max={10}
-          />
-          <PercentageSlider
-            label="Power"
-            value={power}
-            onChange={(e) => setPower(e.target.value)}
-            min={50}
-            max={100}
-          />
+        <div className="flex flex-wrap justify-center gap-4 mt-4">
+          <div className="flex-1 min-w-0">
+            <PercentageSlider
+              label="Alpha"
+              value={alpha}
+              onChange={(e) => setAlpha(e.target.value)}
+              min={1}
+              max={10}
+            />
+          </div>
+          <div className="flex-1 min-w-0">
+            <PercentageSlider
+              label="Power"
+              value={power}
+              onChange={(e) => setPower(e.target.value)}
+              min={50}
+              max={100}
+            />
+          </div>
         </div>
       </div>
 
-      {sampleSize !== null && (
-        <div className="mt-3 text-center p-4 bg-dark-700 shadow-md rounded-md">
-          <strong className="text-lg font-bold text-accent">Sample Size</strong>
-          <div className="text-5xl font-extrabold text-primary">
-            {Math.round(sampleSize)}
-          </div>
-        </div>
-      )}
+      {sampleSize !== null && <SampleSizeDisplay sampleSize={sampleSize} />}
     </div>
   );
 };

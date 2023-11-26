@@ -4,26 +4,17 @@ export interface ParameterInputCardProps {
   label: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  isMDE?: boolean;
-  mdeType?: string;
-  setMdeType?: React.Dispatch<React.SetStateAction<string>>;
-  mdeTypeOptions?: {
-    uplift: string;
-    exactValue: string;
-  };
+  parameterContext?: string;
 }
 
 const ParameterInputCard: React.FC<ParameterInputCardProps> = ({
   label,
   value,
   onChange,
-  isMDE,
-  mdeType,
-  setMdeType,
-  mdeTypeOptions,
+  parameterContext,
 }) => {
   return (
-    <div className="bg-dark-800 p-4 rounded-md shadow-custom border border-gray-500 opacity-80 hover:border-hover">
+    <div className="bg-dark-800 p-4 rounded-md shadow-custom border border-gray-500 opacity-80 hover:border-accent">
       <label className="block text-center text-sm font-medium text-primary mb-2">
         {label}
       </label>
@@ -33,24 +24,10 @@ const ParameterInputCard: React.FC<ParameterInputCardProps> = ({
         value={value}
         onChange={onChange}
       />
-      {isMDE && mdeTypeOptions && (
-        <div className="mt-2 flex justify-center">
-          <span className="text-sm font-medium text-primary mr-2">
-            MDE Type:
-          </span>
-          {Object.entries(mdeTypeOptions).map(([key, text]) => (
-            <label key={key} className="inline-flex items-center ml-2 text-primary">
-              <input
-                type="radio"
-                name="mdeType"
-                value={key}
-                checked={mdeType === key}
-                onChange={() => setMdeType && setMdeType(key)}
-              />
-              <span className="ml-1 text-sm">{text}</span>
-            </label>
-          ))}
-        </div>
+      {parameterContext && (
+        <p className="text-sm italic text-left mt-2 text-primary">
+          {parameterContext}
+        </p>
       )}
     </div>
   );
