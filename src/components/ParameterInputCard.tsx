@@ -15,17 +15,17 @@ const ParameterInputCard: React.FC<ParameterInputCardProps> = ({
 }) => {
   return (
     <div className="bg-dark-800 p-4 rounded-md shadow-custom border border-gray-500 hover:border-accent">
-      <label className="block  text-base font-semibold text-primary mb-2">
+      <label className="block text-base font-semibold text-primary mb-4"> {/* Increased spacing */}
         {label}
       </label>
       <input
         type="text"
-        className="mt-1 text-center text-lg block w-full rounded-md border-gray-500 shadow-sm focus:border-accent focus:ring focus:ring-accent-400 focus:ring-opacity-50 bg-dark-700 text-primary placeholder-gray-500"
+        className="py-4 px-4 text-center text-lg block w-full rounded-md border-gray-500 shadow-sm focus:border-accent focus:ring focus:ring-accent-400 focus:ring-opacity-50 bg-dark-700 text-primary placeholder-gray-500" // Increased padding
         value={value}
         onChange={onChange}
       />
       {parameterContext && (
-        <p className="text-sm italic font-light text-left mt-2 text-primary line-clamp-3">
+        <p className="text-sm font-light text-left mt-4 text-gray-500 line-clamp-3"> {/* Adjusted style and color */}
           {parameterContext}
         </p>
       )}
