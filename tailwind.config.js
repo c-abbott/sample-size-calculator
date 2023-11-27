@@ -44,7 +44,7 @@ export default {
       borderColor: ({ theme }) => ({
         ...theme("colors"),
         DEFAULT: theme("colors.gray.300", "currentColor"),
-        hover: "#bcfd49", // Brighter shade for hover
+        focusWithin: theme("colors.accent", "#bcfd49"), // Focus within state
       }),
 
       fontFamily: {

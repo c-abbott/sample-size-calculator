@@ -14,7 +14,7 @@ const ParameterInputCard: React.FC<ParameterInputCardProps> = ({
   parameterContext,
 }) => {
   return (
-    <div className="bg-dark-800 p-4 rounded-md shadow-custom border border-gray-500 hover:border-accent">
+    <div className="bg-dark-800 p-4 rounded-md shadow-custom border border-gray-500 focus-within:border-focusWithin">
       <label className="block text-base font-semibold text-primary mb-4"> {/* Increased spacing */}
         {label}
       </label>

@@ -19,7 +19,7 @@ const PercentageSlider: React.FC<PercentageSliderProps> = ({
   const percentage = ((parseFloat(value) - min) / (max - min)) * 100;
 
   return (
-    <div className="p-4 bg-dark-800 shadow-custom rounded-md border border-gray-500 hover:border-hover">
+    <div className="p-4 bg-dark-800 shadow-custom rounded-md border border-gray-500 focus-within:border-focusWithin">
       <label className="block text-base text-primary mb-2">
         {label}
       </label>

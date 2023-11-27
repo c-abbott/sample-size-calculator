@@ -10,7 +10,7 @@ const ZTestSampleSizeCalculator: React.FC = () => {
   const [delta, setDelta] = useState<string>("");
   const [avg, setAvg] = useState<string>("");
   const [sd, setSd] = useState<string>("");
-  const [alpha, setAlpha] = useState<string>("10");
+  const [alpha, setAlpha] = useState<string>("5");
   const [power, setPower] = useState<string>("80");
   const [sampleSize, setSampleSize] = useState<number | null>(null);
 
