@@ -7,9 +7,9 @@ import PercentageSlider from "./PercentageSlider";
 import SampleSizeDisplay from "./SampleSizeDisplay";
 
 const ZTestSampleSizeCalculator: React.FC = () => {
-  const [delta, setDelta] = useState<string>("5");
-  const [avg, setAvg] = useState<string>("10000");
-  const [sd, setSd] = useState<string>("902");
+  const [delta, setDelta] = useState<string>("");
+  const [avg, setAvg] = useState<string>("");
+  const [sd, setSd] = useState<string>("");
   const [alpha, setAlpha] = useState<string>("10");
   const [power, setPower] = useState<string>("80");
   const [sampleSize, setSampleSize] = useState<number | null>(null);
@@ -30,29 +30,31 @@ const ZTestSampleSizeCalculator: React.FC = () => {
   };
 
   useEffect(() => {
-    const numDelta = delta !== "" ? parseFloat(delta) / 100 : NaN;
-    const numAvg = avg !== "" ? parseFloat(avg) : NaN;
-    const numSd = sd !== "" ? parseFloat(sd) : NaN;
-    const numAlpha = parseFloat(alpha) / 100 || NaN;
-    const numBeta = 1 - parseFloat(power) / 100 || NaN;
+    if (delta && avg && sd && alpha && power) {
+      const numDelta = delta !== "" ? parseFloat(delta) / 100 : NaN;
+      const numAvg = avg !== "" ? parseFloat(avg) : NaN;
+      const numSd = sd !== "" ? parseFloat(sd) : NaN;
+      const numAlpha = parseFloat(alpha) / 100 || NaN;
+      const numBeta = 1 - parseFloat(power) / 100 || NaN;
 
-    if (
-      !isNaN(numDelta) &&
-      !isNaN(numAvg) &&
-      !isNaN(numSd) &&
-      !isNaN(numAlpha) &&
-      !isNaN(numBeta)
-    ) {
-      const size = calculateSampleSize(
-        numDelta,
-        numAvg,
-        numSd,
-        numAlpha,
-        numBeta
-      );
-      setSampleSize(size);
-    } else {
-      setSampleSize(null);
+      if (
+        !isNaN(numDelta) &&
+        !isNaN(numAvg) &&
+        !isNaN(numSd) &&
+        !isNaN(numAlpha) &&
+        !isNaN(numBeta)
+      ) {
+        const size = calculateSampleSize(
+          numDelta,
+          numAvg,
+          numSd,
+          numAlpha,
+          numBeta
+        );
+        setSampleSize(size);
+      } else {
+        setSampleSize(null);
+      }
     }
   }, [delta, avg, sd, alpha, power]);
 
@@ -104,11 +106,9 @@ const ZTestSampleSizeCalculator: React.FC = () => {
               max={100}
             />
           </div>
-          {sampleSize !== null && (
-            <div className="col-start-3">
-              <SampleSizeDisplay sampleSize={sampleSize} />
-            </div>
-          )}
+          <SampleSizeDisplay
+            sampleSize={sampleSize !== null ? sampleSize : "-"}
+          />
         </div>
       </div>
     </div>
