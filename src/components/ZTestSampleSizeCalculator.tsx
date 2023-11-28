@@ -30,33 +30,27 @@ const ZTestSampleSizeCalculator: React.FC = () => {
   };
 
   useEffect(() => {
-    if (delta && avg && sd && alpha && power) {
-      const numDelta = delta !== "" ? parseFloat(delta) / 100 : NaN;
-      const numAvg = avg !== "" ? parseFloat(avg) : NaN;
-      const numSd = sd !== "" ? parseFloat(sd) : NaN;
-      const numAlpha = parseFloat(alpha) / 100 || NaN;
-      const numBeta = 1 - parseFloat(power) / 100 || NaN;
-
-      if (
-        !isNaN(numDelta) &&
-        !isNaN(numAvg) &&
-        !isNaN(numSd) &&
-        !isNaN(numAlpha) &&
-        !isNaN(numBeta)
-      ) {
-        const size = calculateSampleSize(
-          numDelta,
-          numAvg,
-          numSd,
-          numAlpha,
-          numBeta
-        );
-        setSampleSize(size);
-      } else {
-        setSampleSize(null);
-      }
+    // Check if any of the required fields is empty
+    if (!delta || !avg || !sd || !alpha || !power) {
+      setSampleSize(null);
+      return; // Exit the effect if any field is empty
     }
-  }, [delta, avg, sd, alpha, power]);
+  
+    const numDelta = parseFloat(delta) / 100 || NaN;
+    const numAvg = parseFloat(avg) || NaN;
+    const numSd = parseFloat(sd) || NaN;
+    const numAlpha = parseFloat(alpha) / 100 || NaN;
+    const numBeta = 1 - parseFloat(power) / 100 || NaN;
+  
+    // Check if any of the parsed values is NaN (not a number)
+    if (isNaN(numDelta) || isNaN(numAvg) || isNaN(numSd) || isNaN(numAlpha) || isNaN(numBeta)) {
+      setSampleSize(null);
+    } else {
+      // Perform the sample size calculation
+      const size = calculateSampleSize(numDelta, numAvg, numSd, numAlpha, numBeta);
+      setSampleSize(size);
+    }
+  }, [delta, avg, sd, alpha, power]); // Dependencies array
 
   return (
     <div className="space-y-6 px-8 py-10 bg-dark-900 text-primary">
