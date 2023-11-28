@@ -59,18 +59,10 @@ const ZTestSampleSizeCalculator: React.FC = () => {
         <div className="flex justify-center gap-4 mb-4">
           <div className="flex-1">
             <ParameterInputCard
-              label="MDE"
-              value={delta !== "" ? formatNumber(parseFloat(delta)) : ""}
-              onChange={(e) => handleDeltaChange(e.target.value)}
-              parameterContext="The change in the mean you're trying to measure, also known as the minimum detectable effect"
-            />
-          </div>
-          <div className="flex-1">
-            <ParameterInputCard
               label="Mean"
               value={avg !== "" ? formatNumber(parseFloat(avg)) : ""}
               onChange={(e) => handleAvgChange(e.target.value)}
-              parameterContext="The baseline mean of the metric you're trying to measure"
+              parameterContext="The mean of the metric you're trying to measure. We will use this a baseline."
             />
           </div>
           <div className="flex-1">
@@ -78,7 +70,15 @@ const ZTestSampleSizeCalculator: React.FC = () => {
               label="SD"
               value={sd !== "" ? formatNumber(parseFloat(sd)) : ""}
               onChange={(e) => handleSdChange(e.target.value)}
-              parameterContext="The baseline standard deviation of the metric you're trying to measure"
+              parameterContext="The baseline standard deviation of the metric you're trying to measure."
+            />
+          </div>
+          <div className="flex-1">
+            <ParameterInputCard
+              label="MDE"
+              value={delta !== "" ? formatNumber(parseFloat(delta)) : ""}
+              onChange={(e) => handleDeltaChange(e.target.value)}
+              parameterContext="The change in the mean you're trying to measure, also known as the minimum detectable effect."
             />
           </div>
         </div>

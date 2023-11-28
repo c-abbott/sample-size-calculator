@@ -13,8 +13,8 @@ const SampleSizeDisplay: React.FC<SampleSizeDisplayProps> = ({
     typeof sampleSize === "number" ? formatNumber(sampleSize) : sampleSize;
 
   return (
-    <div className="bg-dark-700 shadow-md rounded-md flex flex-col justify-center items-center p-24">
-      <strong className="text-lg text-center font-bold text-accent mb-2 overflow-clip">
+    <div className="bg-dark-700 shadow-md rounded-md flex flex-col justify-center items-center p-16">
+      <strong className="text-lg text-center font-bold text-accent mb-2">
         Sample Size
       </strong>
       <div className="text-5xl font-extrabold text-primary">

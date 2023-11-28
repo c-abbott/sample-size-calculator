@@ -25,7 +25,7 @@ const ParameterInputCard: React.FC<ParameterInputCardProps> = ({
         onChange={onChange}
       />
       {parameterContext && (
-        <p className="text-sm font-light text-left mt-4 text-gray-500 line-clamp-3"> {/* Adjusted style and color */}
+        <p className="text-sm font-light text-left mt-4 text-gray-500 line-clamp-2"> {/* Adjusted style and color */}
           {parameterContext}
         </p>
       )}
