@@ -6,7 +6,7 @@ import ParameterInputCard from "./ParameterInputCard";
 import PercentageSlider from "./PercentageSlider";
 import SampleSizeDisplay from "./SampleSizeDisplay";
 
-const ZTestSampleSizeCalculator: React.FC = () => {
+const ContinuousSampleSizeCalculator: React.FC = () => {
   const [delta, setDelta] = useState<string>("");
   const [avg, setAvg] = useState<string>("");
   const [sd, setSd] = useState<string>("");
@@ -109,4 +109,4 @@ const ZTestSampleSizeCalculator: React.FC = () => {
   );
 };
 
-export default ZTestSampleSizeCalculator;
+export default ContinuousSampleSizeCalculator;

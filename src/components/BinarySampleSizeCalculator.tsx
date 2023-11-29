@@ -3,7 +3,7 @@ import ParameterInputCard from "./ParameterInputCard";
 import SampleSizeDisplay from "./SampleSizeDisplay";
 import { formatNumber } from "../utils/formatNumber";
 
-const BinaryVariableTestCalculator: React.FC = () => {
+const BinarySampleSizeCalculator: React.FC = () => {
   const [mde, setMde] = useState<string>("");
   const [baselineConversion, setBaselineConversion] = useState<string>("");
   const [sampleSize, setSampleSize] = useState<number | null>(null);
@@ -49,4 +49,4 @@ const BinaryVariableTestCalculator: React.FC = () => {
   );
 };
 
-export default BinaryVariableTestCalculator;
+export default BinarySampleSizeCalculator;
