@@ -35,19 +35,31 @@ const ContinuousSampleSizeCalculator: React.FC = () => {
       setSampleSize(null);
       return; // Exit the effect if any field is empty
     }
-  
+
     const numDelta = parseFloat(delta) / 100 || NaN;
     const numAvg = parseFloat(avg) || NaN;
     const numSd = parseFloat(sd) || NaN;
     const numAlpha = parseFloat(alpha) / 100 || NaN;
     const numBeta = 1 - parseFloat(power) / 100 || NaN;
-  
+
     // Check if any of the parsed values is NaN (not a number)
-    if (isNaN(numDelta) || isNaN(numAvg) || isNaN(numSd) || isNaN(numAlpha) || isNaN(numBeta)) {
+    if (
+      isNaN(numDelta) ||
+      isNaN(numAvg) ||
+      isNaN(numSd) ||
+      isNaN(numAlpha) ||
+      isNaN(numBeta)
+    ) {
       setSampleSize(null);
     } else {
       // Perform the sample size calculation
-      const size = calculateSampleSize(numDelta, numAvg, numSd, numAlpha, numBeta);
+      const size = calculateSampleSize(
+        numDelta,
+        numAvg,
+        numSd,
+        numAlpha,
+        numBeta
+      );
       setSampleSize(size);
     }
   }, [delta, avg, sd, alpha, power]); // Dependencies array

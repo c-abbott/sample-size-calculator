@@ -20,9 +20,7 @@ const PercentageSlider: React.FC<PercentageSliderProps> = ({
 
   return (
     <div className="p-4 bg-dark-800 shadow-custom rounded-md border border-gray-500 focus-within:border-focusWithin">
-      <label className="block text-base text-primary mb-2">
-        {label}
-      </label>
+      <label className="block text-base text-primary mb-2">{label}</label>
       <input
         type="range"
         min={min}

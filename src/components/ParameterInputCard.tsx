@@ -15,7 +15,9 @@ const ParameterInputCard: React.FC<ParameterInputCardProps> = ({
 }) => {
   return (
     <div className="bg-dark-800 p-4 rounded-md shadow-custom border border-gray-500 focus-within:border-focusWithin">
-      <label className="block text-base font-semibold text-primary mb-4"> {/* Increased spacing */}
+      <label className="block text-base font-semibold text-primary mb-4">
+        {" "}
+        {/* Increased spacing */}
         {label}
       </label>
       <input
@@ -25,7 +27,9 @@ const ParameterInputCard: React.FC<ParameterInputCardProps> = ({
         onChange={onChange}
       />
       {parameterContext && (
-        <p className="text-sm font-light text-left mt-4 text-gray-500 line-clamp-2"> {/* Adjusted style and color */}
+        <p className="text-sm font-light text-left mt-4 text-gray-500 line-clamp-2">
+          {" "}
+          {/* Adjusted style and color */}
           {parameterContext}
         </p>
       )}
