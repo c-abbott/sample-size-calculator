@@ -50,26 +50,30 @@ const BinarySampleSizeCalculator: React.FC = () => {
     <div className="space-y-6 px-8 py-10 bg-dark-900 text-primary">
       <div className="bg-dark-800 p-6 shadow-md rounded-md">
         <div className="flex justify-center gap-4 mb-4">
-          <ParameterInputCard
-            label="MDE (%)"
-            value={mde !== "" ? formatNumber(parseFloat(mde)) : ""}
-            onChange={(e) => handleMdeChange(e.target.value)}
-            parameterContext="Minimum Detectable Effect (as a percentage)."
-          />
-          <ParameterInputCard
-            label="Baseline Conversion Rate (%)"
-            value={
-              baselineConversion !== ""
-                ? formatNumber(parseFloat(baselineConversion))
-                : ""
-            }
-            onChange={(e) => handleBaselineConversionChange(e.target.value)}
-            parameterContext="Baseline conversion rate (as a percentage)."
-          />
+          <div className="flex-1">
+            <ParameterInputCard
+              label="MDE (%)"
+              value={mde !== "" ? formatNumber(parseFloat(mde)) : ""}
+              onChange={(e) => handleMdeChange(e.target.value)}
+              parameterContext="Minimum Detectable Effect (as a percentage)."
+            />
+          </div>
+          <div className="flex-1">
+            <ParameterInputCard
+              label="Baseline Conversion Rate (%)"
+              value={
+                baselineConversion !== ""
+                  ? formatNumber(parseFloat(baselineConversion))
+                  : ""
+              }
+              onChange={(e) => handleBaselineConversionChange(e.target.value)}
+              parameterContext="Baseline conversion rate (as a percentage)."
+            />
+          </div>
         </div>
         {/* SampleSizeDisplay and PercentageSliders */}
-        <div className="grid grid-cols-3 gap-4">
-          <div className="col-span-2 flex flex-col gap-4">
+        <div className="grid grid-cols-2 gap-4">
+          <div className="col-span-1 flex flex-col gap-4">
             {/* Alpha and Power Sliders */}
             <PercentageSlider
               label="Alpha"
