@@ -20,6 +20,9 @@ const SampleSizeDisplay: React.FC<SampleSizeDisplayProps> = ({
       <div className="text-5xl font-extrabold text-primary">
         {displaySize}
       </div>
+      <p className="text-sm font-light text-center mt-2 text-primary">
+        per variation
+      </p>
     </div>
   );
 };
