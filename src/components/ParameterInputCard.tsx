@@ -5,8 +5,9 @@ export interface ParameterInputCardProps {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   parameterContext?: string;
-  mdeType?: 'absolute' | 'relative';
-  onMdeTypeChange?: (type: 'absolute' | 'relative') => void;
+  mdeType?: "absolute" | "relative";
+  onMdeTypeChange?: (type: "absolute" | "relative") => void;
+  showRadioButtons?: boolean;
 }
 
 const ParameterInputCard: React.FC<ParameterInputCardProps> = ({
@@ -16,46 +17,49 @@ const ParameterInputCard: React.FC<ParameterInputCardProps> = ({
   parameterContext,
   mdeType,
   onMdeTypeChange,
+  showRadioButtons,
 }) => {
   return (
     <div className="bg-dark-800 p-4 rounded-md shadow-custom border border-gray-500 focus-within:border-focusWithin">
-      <label className="block text-base font-semibold text-primary mb-4">
-        {" "}
-        {/* Increased spacing */}
-        {label}
-      </label>
+      <div className="flex justify-between items-center mb-4">
+        <label className="block text-base font-semibold text-primary">
+          {label}
+        </label>
+        {showRadioButtons && (
+          <div className="flex">
+            <label className="text-sm font-light text-primary mr-2 flex items-center">
+              <span className="mr-2">Absolute</span>
+              <input
+                type="radio"
+                name="mdeType"
+                value="absolute"
+                checked={mdeType === "absolute"}
+                onChange={() => onMdeTypeChange?.("absolute")}
+                className="form-radio h-4 w-4 text-accent"
+              />
+            </label>
+            <label className="text-sm font-light text-primary ml-4 flex items-center">
+              <span className="mr-2">Relative</span>
+              <input
+                type="radio"
+                name="mdeType"
+                value="relative"
+                checked={mdeType === "relative"}
+                onChange={() => onMdeTypeChange?.("relative")}
+                className="form-radio h-4 w-4 text-accent"
+              />
+            </label>
+          </div>
+        )}
+      </div>
       <input
         type="text"
-        className="py-4 px-4 text-center text-lg block w-full rounded-md border-gray-500 shadow-sm focus:border-accent focus:ring focus:ring-accent-400 focus:ring-opacity-50 bg-dark-700 text-primary placeholder-gray-500" // Increased padding
+        className="py-4 px-4 text-center text-lg block w-full rounded-md border-gray-500 shadow-sm focus:border-accent focus:ring focus:ring-accent-400 focus:ring-opacity-50 bg-dark-700 text-primary placeholder-gray-500"
         value={value}
         onChange={onChange}
       />
-      {label === "MDE (%)" && (
-        <div className="mt-2">
-          <label className="text-sm font-light text-primary mr-2">
-            Absolute
-            <input
-              type="radio"
-              value="absolute"
-              checked={mdeType === 'absolute'}
-              onChange={() => onMdeTypeChange?.('absolute')}
-            />
-          </label>
-          <label className="text-sm font-light text-primary ml-4">
-            Relative
-            <input
-              type="radio"
-              value="relative"
-              checked={mdeType === 'relative'}
-              onChange={() => onMdeTypeChange?.('relative')}
-            />
-          </label>
-        </div>
-      )}
       {parameterContext && (
         <p className="text-sm font-light text-left mt-4 text-gray-500 line-clamp-2">
-          {" "}
-          {/* Adjusted style and color */}
           {parameterContext}
         </p>
       )}
