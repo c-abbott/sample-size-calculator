@@ -21,16 +21,14 @@ export const calculateBinarySampleSize = (
   alpha: number, 
   power: number
 ): number => {
-  const decimalMde = mde / 100; // Convert MDE from percentage to decimal
-  const decimalBaselineConversion = baselineConversion / 100; // Convert baseline conversion from percentage to decimal
-  const deltaSquared = decimalBaselineConversion * (1 - decimalBaselineConversion);
+  const deltaSquared = baselineConversion * (1 - baselineConversion);
 
   // Z-scores for Alpha and Power
   const Za = calculateZScore(1 - alpha / 2); // For two-tailed test
   const Zb = calculateZScore(power);
 
   // Adjust sample size calculation
-  return 2 * Math.pow(Za + Zb, 2) * deltaSquared / Math.pow(decimalMde, 2);
+  return 2 * Math.pow(Za + Zb, 2) * deltaSquared / Math.pow(mde, 2);
 };
 
 export function calculateSampleSize(delta: number, avg: number, sd: number, alpha: number, beta: number): number {
