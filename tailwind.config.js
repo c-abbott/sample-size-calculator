@@ -34,6 +34,7 @@ export default {
         error: "#ef4444", // Red for errors
         info: "#3b82f6", // Blue for informational messages
       },
+      
 
       boxShadow: {
         // Custom shadow for input and slider
@@ -46,6 +47,15 @@ export default {
         DEFAULT: theme("colors.gray.300", "currentColor"),
         focusWithin: theme("colors.accent", "#bcfd49"), // Focus within state
       }),
+
+        // Add custom radio color
+        customForms: theme => ({
+          default: {
+            'radio': {
+              color: theme('colors.accent'),
+            },
+          },
+        }),
 
       fontFamily: {
         sans: ["Poppins", "sans-serif", ...defaultTheme.fontFamily.sans],
@@ -95,5 +105,7 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+  ]
 };
