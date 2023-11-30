@@ -5,6 +5,8 @@ export interface ParameterInputCardProps {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   parameterContext?: string;
+  mdeType?: 'absolute' | 'relative';
+  onMdeTypeChange?: (type: 'absolute' | 'relative') => void;
 }
 
 const ParameterInputCard: React.FC<ParameterInputCardProps> = ({
@@ -12,6 +14,8 @@ const ParameterInputCard: React.FC<ParameterInputCardProps> = ({
   value,
   onChange,
   parameterContext,
+  mdeType,
+  onMdeTypeChange,
 }) => {
   return (
     <div className="bg-dark-800 p-4 rounded-md shadow-custom border border-gray-500 focus-within:border-focusWithin">
@@ -26,6 +30,28 @@ const ParameterInputCard: React.FC<ParameterInputCardProps> = ({
         value={value}
         onChange={onChange}
       />
+      {label === "MDE (%)" && (
+        <div className="mt-2">
+          <label className="text-sm font-light text-primary mr-2">
+            Absolute
+            <input
+              type="radio"
+              value="absolute"
+              checked={mdeType === 'absolute'}
+              onChange={() => onMdeTypeChange?.('absolute')}
+            />
+          </label>
+          <label className="text-sm font-light text-primary ml-4">
+            Relative
+            <input
+              type="radio"
+              value="relative"
+              checked={mdeType === 'relative'}
+              onChange={() => onMdeTypeChange?.('relative')}
+            />
+          </label>
+        </div>
+      )}
       {parameterContext && (
         <p className="text-sm font-light text-left mt-4 text-gray-500 line-clamp-2">
           {" "}

@@ -8,6 +8,7 @@ import { formatNumber } from "../utils/formatNumber";
 const BinarySampleSizeCalculator: React.FC = () => {
   const [mde, setMde] = useState<string>("");
   const [baselineConversion, setBaselineConversion] = useState<string>("");
+  const [mdeType, setMdeType] = useState<'absolute' | 'relative'>('absolute');
   const [alpha, setAlpha] = useState<string>("5");
   const [power, setPower] = useState<string>("80");
   const [sampleSize, setSampleSize] = useState<number | null>(null);
@@ -28,23 +29,19 @@ const BinarySampleSizeCalculator: React.FC = () => {
       return;
     }
 
-    const numMde = parseFloat(mde) / 100; // Convert to decimal
+    let adjustedMde = parseFloat(mde) / 100; // Convert to decimal
+
+    if (mdeType === 'relative') {
+      adjustedMde *= parseFloat(baselineConversion) / 100; // Adjust for relative MDE
+    }
+
     const numBaselineConversion = parseFloat(baselineConversion) / 100; // Convert to decimal
     const numAlpha = parseFloat(alpha) / 100; // Convert to decimal
     const numPower = parseFloat(power) / 100; // Convert to decimal
 
-    if (!isNaN(numMde) && !isNaN(numBaselineConversion)) {
-      const size = calculateBinarySampleSize(
-        numMde,
-        numBaselineConversion,
-        numAlpha,
-        numPower
-      );
-      setSampleSize(size);
-    } else {
-      setSampleSize(null);
-    }
-  }, [mde, baselineConversion, alpha, power]);
+    const size = calculateBinarySampleSize(adjustedMde, numBaselineConversion, numAlpha, numPower);
+    setSampleSize(size);
+  }, [mde, baselineConversion, mdeType, alpha, power]);
 
   return (
     <div className="space-y-6 px-8 py-10 bg-dark-900 text-primary">
@@ -55,7 +52,9 @@ const BinarySampleSizeCalculator: React.FC = () => {
               label="MDE (%)"
               value={mde !== "" ? formatNumber(parseFloat(mde)) : ""}
               onChange={(e) => handleMdeChange(e.target.value)}
-              parameterContext="Minimum Detectable Effect (as a percentage)."
+              parameterContext="The change in the metric you're trying to measure, also known as the minimum detectable effect."
+              mdeType={mdeType}
+              onMdeTypeChange={setMdeType}
             />
           </div>
           <div className="flex-1">
@@ -67,7 +66,7 @@ const BinarySampleSizeCalculator: React.FC = () => {
                   : ""
               }
               onChange={(e) => handleBaselineConversionChange(e.target.value)}
-              parameterContext="Baseline conversion rate (as a percentage)."
+              parameterContext="The baseline conversion rate of the metric you're trying to measure prior to running the experiment."
             />
           </div>
         </div>
