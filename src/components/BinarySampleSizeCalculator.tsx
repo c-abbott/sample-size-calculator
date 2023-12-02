@@ -6,8 +6,8 @@ import { calculateBinarySampleSize } from "../utils/calculations";
 import { formatNumber } from "../utils/formatNumber";
 
 const BinarySampleSizeCalculator: React.FC = () => {
-  const [mde, setMde] = useState<string>("");
-  const [baselineConversion, setBaselineConversion] = useState<string>("");
+  const [mde, setMde] = useState<string>("5");
+  const [baselineConversion, setBaselineConversion] = useState<string>("20");
   const [mdeType, setMdeType] = useState<"absolute" | "relative">("absolute");
   const [alpha, setAlpha] = useState<string>("5");
   const [power, setPower] = useState<string>("80");

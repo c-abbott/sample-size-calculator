@@ -7,9 +7,9 @@ import PercentageSlider from "./PercentageSlider";
 import SampleSizeDisplay from "./SampleSizeDisplay";
 
 const ContinuousSampleSizeCalculator: React.FC = () => {
-  const [delta, setDelta] = useState<string>("");
-  const [avg, setAvg] = useState<string>("");
-  const [sd, setSd] = useState<string>("");
+  const [delta, setDelta] = useState<string>("5");
+  const [avg, setAvg] = useState<string>("7000");
+  const [sd, setSd] = useState<string>("2500");
   const [alpha, setAlpha] = useState<string>("5");
   const [power, setPower] = useState<string>("80");
   const [sampleSize, setSampleSize] = useState<number | null>(null);
