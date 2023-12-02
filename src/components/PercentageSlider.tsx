@@ -32,10 +32,14 @@ const PercentageSlider: React.FC<PercentageSliderProps> = ({
           onMouseEnter={() => setShowTooltip(true)}
           onMouseLeave={() => setShowTooltip(false)}
         >
-          <FontAwesomeIcon icon={faInfoCircle} className="cursor-pointer" />
+          <FontAwesomeIcon
+            icon={faInfoCircle}
+            className="cursor-pointer"
+            opacity={showTooltip ? 1 : 0.5}
+          />
         </span>
         {showTooltip && (
-          <div className="absolute top-0 right-0 mt-2 mr-12 p-2 bg-dark-800 text-gray-500 text-sm rounded-md shadow-lg">
+          <div className="absolute top-0 right-0 mt-2 mr-12 ml-36 p-2 bg-dark-800 text-gray-500 text-sm rounded-md shadow-lg">
             {tooltipText}
           </div>
         )}

@@ -86,6 +86,7 @@ const BinarySampleSizeCalculator: React.FC = () => {
               onChange={(e) => setAlpha(e.target.value)}
               min={1}
               max={20}
+              tooltipText="The probability of a Type I error, or false positive. This is the probability that you will detect a difference when one does not actually exist."
             />
             <PercentageSlider
               label="Power"
@@ -93,6 +94,7 @@ const BinarySampleSizeCalculator: React.FC = () => {
               onChange={(e) => setPower(e.target.value)}
               min={50}
               max={100}
+              tooltipText="The probability of a Type II error, or false negative. This is the probability that you will fail to detect a difference when one actually exists."
             />
           </div>
           {/* Sample Size Display */}
