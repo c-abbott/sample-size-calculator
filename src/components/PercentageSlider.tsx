@@ -1,4 +1,7 @@
 import React from "react";
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 export interface PercentageSliderProps {
   label: string;
@@ -6,21 +9,37 @@ export interface PercentageSliderProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   min?: number;
   max?: number;
+  tooltipText?: string;
 }
 
 const PercentageSlider: React.FC<PercentageSliderProps> = ({
   label,
   value,
   onChange,
-  min = 0, // Default to 0 if not provided
-  max = 100, // Default to 100 if not provided
+  min = 0,
+  max = 100,
+  tooltipText = "Information about this slider",
 }) => {
-  // Calculate the percentage of the value within the range
+  const [showTooltip, setShowTooltip] = useState(false);
+
   const percentage = ((parseFloat(value) - min) / (max - min)) * 100;
 
   return (
-    <div className="p-4 bg-dark-800 shadow-custom rounded-md border border-gray-500 focus-within:border-focusWithin">
-      <label className="block text-base text-primary mb-2">{label}</label>
+    <div className="relative p-4 bg-dark-800 shadow-custom rounded-md border border-gray-500 focus-within:border-focusWithin">
+      <label className="text-base text-primary mb-2 flex justify-between items-center">
+        {label}
+        <span
+          onMouseEnter={() => setShowTooltip(true)}
+          onMouseLeave={() => setShowTooltip(false)}
+        >
+          <FontAwesomeIcon icon={faInfoCircle} className="cursor-pointer" />
+        </span>
+        {showTooltip && (
+          <div className="absolute top-0 right-0 mt-2 mr-12 p-2 bg-dark-800 text-gray-500 text-sm rounded-md shadow-lg">
+            {tooltipText}
+          </div>
+        )}
+      </label>
       <input
         type="range"
         min={min}
