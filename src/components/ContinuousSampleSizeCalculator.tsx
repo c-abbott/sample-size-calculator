@@ -90,7 +90,7 @@ const ContinuousSampleSizeCalculator: React.FC = () => {
               label="MDE (%)"
               value={delta !== "" ? formatNumber(parseFloat(delta)) : ""}
               onChange={(e) => handleDeltaChange(e.target.value)}
-              parameterContext="The absolute % change in the mean you're trying to detect; the minium detectable effect (MDE)."
+              parameterContext="The absolute % change in the mean you're trying to detect."
             />
           </div>
         </div>

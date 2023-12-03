@@ -22,7 +22,7 @@ const ExpandableContent: React.FC<{ title: string, content: string }> = ({ title
         />
         {title}
       </button>
-      {isOpen && <p className="mt-2 ml-8 px-4 py-4 text-sm text-gray-500">{content}</p>}
+      {isOpen && <p className="mt-2 ml-8 px-4 py-4 text-sm text-gray-400">{content}</p>}
     </div>
   );
 };

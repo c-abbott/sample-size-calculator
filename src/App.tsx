@@ -9,24 +9,24 @@ function App() {
       <div className="px-16 mx-auto">
           <CalculatorContext
             title="Binary Sample Size Calculator"
-            text="Use this calculator to determine the sample size for your binary data analysis."
+            text=" Use this calculator to determine the necessary sample size for running experiments concerned with assessing the difference in proportions. Examples: Conversion Rates, Retention, Click-Through Rates."
           />
           <BinarySampleSizeCalculator />
-          <ExpandableContent
+          {/* <ExpandableContent
             title="Learn More About the Binary Calculator Math"
             content="Detailed mathematical explanation for Binary Sample Size Calculator..."
-          />
+          /> */}
 
         <div className="my-16">
           <CalculatorContext
             title="Continuous Sample Size Calculator"
-            text="Use this calculator to determine the sample size for continuous data."
+            text=" Use this calculator to determine the necessary sample size for running experiments concerned with assessing the difference in means. Examples: Average Session Duration, Revenue per User, Customer Lifetime Value (CLV), Time to Conversion."
           />
           <ContinuousSampleSizeCalculator />
-          <ExpandableContent
+          {/* <ExpandableContent
             title="Learn More About the Continuous Calculator Math"
             content="Detailed mathematical explanation for Continuous Sample Size Calculator..."
-          />
+          /> */}
         </div>
       </div>
     </div>
