@@ -14,11 +14,8 @@ Sample Size Calculator is an open-source web application designed to determine t
 - Node.js
 - npm or yarn
 
-### Installation
-1. Clone the repository:
-   ```bash
-   git clone [https://github.com/c-abbott/sample-size-calculator]
-   ```
+### Installation and Development Setup
+1. Fork the repository and create your branch from `main`.
 2. Navigate to the project directory:
    ```bash
    cd sample-size-calculator
@@ -31,16 +28,14 @@ Sample Size Calculator is an open-source web application designed to determine t
    ```bash
    yarn install
    ```
-
-### Running the Application
-To run the application locally:
-```bash
-npm run dev
-```
-or
-```bash
-yarn start
-```
+4. Run the application locally:
+   ```bash
+   npm start
+   ```
+   or
+   ```bash
+   yarn start
+   ```
 
 ## Contributing
 We welcome contributions to the Sample Size Calculator project. Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
