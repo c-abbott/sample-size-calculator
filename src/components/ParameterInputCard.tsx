@@ -22,9 +22,7 @@ const ParameterInputCard: React.FC<ParameterInputCardProps> = ({
   return (
     <div className="bg-dark-800 p-4 rounded-md shadow-custom border border-gray-500 focus-within:border-focusWithin">
       <div className="flex justify-between items-center mb-4">
-        <label className="block text-base text-primary">
-          {label}
-        </label>
+        <label className="block text-base text-primary">{label}</label>
         {showRadioButtons && (
           <div className="flex">
             <label className="text-sm font-light text-primary mr-2 flex items-center">

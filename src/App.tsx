@@ -7,12 +7,12 @@ function App() {
   return (
     <div className="bg-dark-900 min-h-screen text-primary p-8">
       <div className="px-16 mx-auto">
-          <CalculatorContext
-            title="Binary Sample Size Calculator"
-            text=" Use this calculator to determine the necessary sample size for running experiments concerned with assessing the difference in proportions. Examples: Conversion Rates, Retention, Click-Through Rates."
-          />
-          <BinarySampleSizeCalculator />
-          {/* <ExpandableContent
+        <CalculatorContext
+          title="Binary Sample Size Calculator"
+          text=" Use this calculator to determine the necessary sample size for running experiments concerned with assessing the difference in proportions. Examples: Conversion Rates, Retention, Click-Through Rates."
+        />
+        <BinarySampleSizeCalculator />
+        {/* <ExpandableContent
             title="Learn More About the Binary Calculator Math"
             content="Detailed mathematical explanation for Binary Sample Size Calculator..."
           /> */}
