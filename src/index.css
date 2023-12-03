@@ -2,11 +2,11 @@
 .slider-thumb::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 20px; /* width of the thumb */
-  height: 20px; /* height of the thumb */
+  width: 28px; /* width of the thumb */
+  height: 28px; /* height of the thumb */
   background: #d4ff00; /* green background */
   cursor: pointer; /* cursor style */
-  border-radius: 10px; /* rounded corners */
+  border-radius: 8px; /* rounded corners */
 }
 
 .slider-thumb::-moz-range-thumb {
