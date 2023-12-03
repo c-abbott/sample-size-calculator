@@ -66,7 +66,7 @@ const ContinuousSampleSizeCalculator: React.FC = () => {
 
   return (
     <div className="py-4 bg-dark-900 text-primary">
-      <div className="bg-dark-800 p-8 shadow-md rounded-md">
+      <div className="bg-dark-800 p-4 shadow-md rounded-md">
         {/* First Row: ParameterInputCards */}
         <div className="flex justify-center gap-4 mb-4">
           <div className="flex-1">
