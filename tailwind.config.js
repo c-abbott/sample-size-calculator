@@ -64,6 +64,7 @@ export default {
       fontSize: {
         xs: ['0.75rem', '1rem'],    // 12px, line-height 16px
         sm: ['1rem', '1.5rem'],      // 16px, line-height 24px
+        smbase: ['1.125rem', '1.75rem'], // 18px, line-height 28px
         base: ['1.5rem', '2rem'],    // 24px, line-height 32px
         lg: ['2rem', '2.5rem'],      // 32px, line-height 40px
         xl: ['3rem', '3.5rem'],      // 48px, line-height 56px
