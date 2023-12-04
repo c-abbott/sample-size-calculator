@@ -51,7 +51,7 @@ const BinarySampleSizeCalculator: React.FC = () => {
   return (
     <div className="py-4 bg-dark-900 text-primary">
       <div className="bg-dark-800 p-4 shadow-md rounded-md">
-        <div className="flex justify-center gap-4 mb-4">
+        <div className="flex flex-col md:flex-row justify-center gap-4 mb-4">
           <div className="flex-1">
             <ParameterInputCard
               label="Baseline Conversion Rate (%)"
@@ -77,8 +77,8 @@ const BinarySampleSizeCalculator: React.FC = () => {
           </div>
         </div>
         {/* SampleSizeDisplay and PercentageSliders */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="col-span-1 flex flex-col gap-4">
+        <div className="flex flex-col md:grid md:grid-cols-2 gap-4">
+          <div className="flex flex-col gap-4">
             <PercentageSlider
               label="Alpha (α)"
               value={alpha}

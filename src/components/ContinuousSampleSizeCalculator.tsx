@@ -67,8 +67,7 @@ const ContinuousSampleSizeCalculator: React.FC = () => {
   return (
     <div className="py-4 bg-dark-900 text-primary">
       <div className="bg-dark-800 p-4 shadow-md rounded-md">
-        {/* First Row: ParameterInputCards */}
-        <div className="flex justify-center gap-4 mb-4">
+        <div className="flex flex-col md:flex-row justify-center gap-4 mb-4">
           <div className="flex-1">
             <ParameterInputCard
               label="Mean"
@@ -94,9 +93,8 @@ const ContinuousSampleSizeCalculator: React.FC = () => {
             />
           </div>
         </div>
-        {/* Second Row: SampleSizeDisplay and PercentageSliders */}
-        <div className="grid grid-cols-3 gap-4">
-          <div className="col-span-2 flex flex-col gap-4">
+        <div className="flex flex-col md:grid md:grid-cols-2 gap-4">
+          <div className="flex flex-col gap-4">
             <PercentageSlider
               label="Alpha (α)"
               value={alpha}
