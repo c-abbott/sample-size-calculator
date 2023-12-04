@@ -49,8 +49,8 @@ const BinarySampleSizeCalculator: React.FC = () => {
   }, [mde, baselineConversion, mdeType, alpha, power]);
 
   return (
-    <div className="py-4 bg-dark-900 text-primary">
-      <div className="bg-dark-800 p-4 shadow-md rounded-md">
+    <div className="py-4 px-1 md:px-2 bg-dark-900 text-primary">
+      <div className="bg-dark-800 p-2 md:p-4 shadow-md rounded-md">
         <div className="flex flex-col md:flex-row justify-center gap-4 mb-4">
           <div className="flex-1">
             <ParameterInputCard
