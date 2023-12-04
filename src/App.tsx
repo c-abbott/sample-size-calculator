@@ -2,10 +2,25 @@ import BinarySampleSizeCalculator from "./components/BinarySampleSizeCalculator"
 import CalculatorContext from "./components/CalculatorContext";
 import ContinuousSampleSizeCalculator from "./components/ContinuousSampleSizeCalculator";
 import ExpandableContent from "./components/ExpandableContent";
+import { Helmet } from "react-helmet";
 
 function App() {
   return (
     <div className="bg-dark-900 min-h-screen text-primary p-4 md:p-8">
+      <Helmet>
+        <title>Sample Size Calculator</title>
+        <meta property="og:title" content="Sample Size Calculator" />
+        <meta
+          property="og:description"
+          content="A simple and effective tool for calculating the sample size needed for your next a/b test."
+        />
+        <meta property="og:image" content="https://ibb.co/vj0dC95" />
+        <meta
+          property="og:url"
+          content="https://sample-size-calculator.vercel.app/"
+        />
+        <meta property="og:type" content="website" />
+      </Helmet>
       <div className="px-4 sm:px-8 md:px-16 mx-auto">
         <CalculatorContext
           title="Binary Sample Size Calculator"
