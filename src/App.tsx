@@ -14,7 +14,7 @@ function App() {
           property="og:description"
           content="A simple and effective tool for calculating the sample size needed for your next a/b test."
         />
-        <meta property="og:image" content="https://ibb.co/vj0dC95" />
+        <meta property="og:image" content="https://ibb.co/tX8kX42" />
         <meta
           property="og:url"
           content="https://sample-size-calculator.vercel.app/"
