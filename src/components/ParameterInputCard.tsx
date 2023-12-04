@@ -24,29 +24,33 @@ const ParameterInputCard: React.FC<ParameterInputCardProps> = ({
       <div className="flex justify-between items-center mb-4">
         <label className="block text-base text-primary">{label}</label>
         {showRadioButtons && (
-          <div className="flex">
-            <label className="text-sm font-light text-primary mr-2 flex items-center">
-              <span className="mr-2">Absolute</span>
-              <input
-                type="radio"
-                name="mdeType"
-                value="absolute"
-                checked={mdeType === "absolute"}
-                onChange={() => onMdeTypeChange?.("absolute")}
-                className="form-radio h-4 w-4 text-accent"
-              />
-            </label>
-            <label className="text-sm font-light text-primary ml-4 flex items-center">
-              <span className="mr-2">Relative</span>
-              <input
-                type="radio"
-                name="mdeType"
-                value="relative"
-                checked={mdeType === "relative"}
-                onChange={() => onMdeTypeChange?.("relative")}
-                className="form-radio h-4 w-4 text-accent"
-              />
-            </label>
+          <div className="flex items-center">
+            <div className="flex items-center mr-2">
+              <label className="text-sm font-light text-primary flex items-center">
+                <span className="mr-2">Absolute</span>
+                <input
+                  type="radio"
+                  name="mdeType"
+                  value="absolute"
+                  checked={mdeType === "absolute"}
+                  onChange={() => onMdeTypeChange?.("absolute")}
+                  className="form-radio h-4 w-4 text-accent"
+                />
+              </label>
+            </div>
+            <div className="flex items-center">
+              <label className="text-sm font-light text-primary flex items-center">
+                <span className="mr-2">Relative</span>
+                <input
+                  type="radio"
+                  name="mdeType"
+                  value="relative"
+                  checked={mdeType === "relative"}
+                  onChange={() => onMdeTypeChange?.("relative")}
+                  className="form-radio h-4 w-4 text-accent"
+                />
+              </label>
+            </div>
           </div>
         )}
       </div>
