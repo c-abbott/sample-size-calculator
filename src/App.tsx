@@ -28,7 +28,7 @@ function App() {
           text=" Use this calculator to determine the necessary sample size for running experiments concerned with assessing the difference in proportions. Examples: Conversion Rates, Retention, Click-Through Rates."
         />
         <BinarySampleSizeCalculator />
-        <ExpandableContent title="Learn more...">
+        <ExpandableContent title="How does this work?">
           <BinaryCalculatorContent />
         </ExpandableContent>
         <div className="my-16">
