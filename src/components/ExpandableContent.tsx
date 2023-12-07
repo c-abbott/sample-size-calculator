@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChevronRight,
-  faChevronDown,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 const ExpandableContent: React.FC<{
   title: string;
@@ -19,15 +16,17 @@ const ExpandableContent: React.FC<{
       onMouseLeave={() => setIsHovered(false)}
     >
       <button
-        className="flex items-center text-sm  text-gray-500 w-full text-left"
+        className="flex items-center text-sm text-gray-500 w-full text-left"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <FontAwesomeIcon
-          icon={isOpen ? faChevronDown : faChevronRight}
-          className={`text-accent px-4 ${
-            isHovered ? "opacity-100" : "opacity-50"
-          }`}
-        />
+        <div className="flex-shrink-0 mr-2" style={{ width: '24px' }}> 
+          <FontAwesomeIcon
+            icon={isOpen ? faChevronDown : faChevronRight}
+            className={`text-accent ${
+              isHovered ? "opacity-100" : "opacity-50"
+            }`}
+          />
+        </div>
         {title}
       </button>
       {isOpen && (
