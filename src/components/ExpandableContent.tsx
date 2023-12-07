@@ -14,24 +14,24 @@ const ExpandableContent: React.FC<{
 
   return (
     <div
-      className="bg-dark-800 rounded-md"
+      className="bg-dark-800 mx-2 p-2 md:p-4 shadow-md rounded-md"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <button
-        className="flex items-center text-sm px-4 py-4 text-gray-500 w-full text-left"
+        className="flex items-center text-sm  text-gray-500 w-full text-left"
         onClick={() => setIsOpen(!isOpen)}
       >
         <FontAwesomeIcon
           icon={isOpen ? faChevronDown : faChevronRight}
-          className={`text-accent mr-4 ${
+          className={`text-accent px-4 ${
             isHovered ? "opacity-100" : "opacity-50"
           }`}
         />
         {title}
       </button>
       {isOpen && (
-        <div className="mt-2 ml-8 px-4 py-4 text-sm text-gray-400">
+        <div className="px-4 py-4 text-sm text-gray-400">
           {children}
         </div>
       )}

@@ -1,3 +1,4 @@
+import BinaryCalculatorContent from './content/BinaryCalculatorContent';
 import BinarySampleSizeCalculator from "./components/BinarySampleSizeCalculator";
 import CalculatorContext from "./components/CalculatorContext";
 import ContinuousSampleSizeCalculator from "./components/ContinuousSampleSizeCalculator";
@@ -27,11 +28,9 @@ function App() {
           text=" Use this calculator to determine the necessary sample size for running experiments concerned with assessing the difference in proportions. Examples: Conversion Rates, Retention, Click-Through Rates."
         />
         <BinarySampleSizeCalculator />
-        {/* <ExpandableContent
-            title="Learn More About the Binary Calculator Math"
-            content="Detailed mathematical explanation for Binary Sample Size Calculator..."
-          /> */}
-
+        <ExpandableContent title="Learn more...">
+          <BinaryCalculatorContent />
+        </ExpandableContent>
         <div className="my-16">
           <CalculatorContext
             title="Continuous Sample Size Calculator"
