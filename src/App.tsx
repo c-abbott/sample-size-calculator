@@ -1,4 +1,4 @@
-import BinaryCalculatorContent from './content/BinaryCalculatorContent';
+import BinaryCalculatorContent from "./content/BinaryCalculatorContent";
 import BinarySampleSizeCalculator from "./components/BinarySampleSizeCalculator";
 import CalculatorContext from "./components/CalculatorContext";
 import ContinuousSampleSizeCalculator from "./components/ContinuousSampleSizeCalculator";
@@ -37,10 +37,9 @@ function App() {
             text=" Use this calculator to determine the necessary sample size for running experiments concerned with assessing the difference in means. Examples: Average Session Duration, Revenue per User, Customer Lifetime Value (CLV), Time to Conversion."
           />
           <ContinuousSampleSizeCalculator />
-          {/* <ExpandableContent
-            title="Learn More About the Continuous Calculator Math"
-            content="Detailed mathematical explanation for Continuous Sample Size Calculator..."
-          /> */}
+          <ExpandableContent title="How does this work?">
+            <BinaryCalculatorContent />
+          </ExpandableContent>
         </div>
       </div>
     </div>
