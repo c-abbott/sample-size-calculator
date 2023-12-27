@@ -10,7 +10,7 @@ const BinaryCalculatorContent: React.FC = () => (
     <p>The calculator uses a two-sided Z-test to compute the sample size. A Z-score tells us how far from the mean a data point is, in terms of standard deviations. Just trying to keep my github squares green at this point. Really getting desperate at this point. Blah, blah, blah, blah</p>
     
     <p>The Formula:</p>
-    <BlockMath>{'Sample Size = \\frac{2 \\times (Z_{\\alpha/2} + Z_{\\beta})^2 \\times \\delta^2}{MDE^2}'}</BlockMath>
+    <BlockMath>{'Sample Size = \\frac{2 \\times (Z_{\\alpha/2} + Z_{\\beta})^2 \\times \\delta^2}{MDE}'}</BlockMath>
   
   </div>
 );
