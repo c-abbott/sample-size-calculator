@@ -58,7 +58,7 @@ const BinaryCalculatorContent: React.FC = () => (
       <BlockMath>
         {"\\text{Control Sample Distribution}" +
           "\\\\[2mm]" +
-          "\\bar{X_{C}} \\sim \\text{Normal}({\\mu}_{\\bar{p}_{C}}, \\sigma_{\\bar{p}_{C}}^2)" +
+          "\\bar{X}_{C} \\sim \\text{Normal}({\\mu}_{\\bar{p}_{C}}, \\sigma_{\\bar{p}_{C}}^2)" +
           "\\\\" +
           "{\\mu}_{\\bar{p}_{C}} = p_{C}" +
           "\\\\[2.5mm]" +
@@ -66,7 +66,7 @@ const BinaryCalculatorContent: React.FC = () => (
           "\\\\[5mm]" +
           "\\text{Treatment Sample Distribution}" +
           "\\\\[2mm]" +
-          "\\bar{X_{T}} \\sim \\text{Normal}({\\mu}_{\\bar{p}_{T}}, \\sigma_{\\bar{p}_{T}}^2)" +
+          "\\bar{X}_{T} \\sim \\text{Normal}({\\mu}_{\\bar{p}_{T}}, \\sigma_{\\bar{p}_{T}}^2)" +
           "\\\\" +
           "{\\mu}_{\\bar{p}_{T}} = p_{T}" +
           "\\\\[2.5mm]" +
@@ -74,76 +74,43 @@ const BinaryCalculatorContent: React.FC = () => (
       </BlockMath>
       Coming back to our example, the objective of the A/B test is to determine
       whether the new feature causes a statistically significant increase in
-      conversion. To do this, we must first define our null hypothesis and
-      alternative hypotheses:
-      <BlockMath>{"H_{0}: p_{T} - p_{C} = 0"}</BlockMath>
-      From this definition, we can then define the decision criteria to reject
-      the null hypothesis and therefore declare a statistically significant
-      difference in conversion rates between the treatment and control groups,
-      namely:
+      conversion. We are therefore interested in the uplift distribution which
+      is defined as follows:
       <BlockMath>
-        {
-          "\\text{Reject } H_{0} \\text{ if } p(\\bar{p}_{T} - \\bar{p}_{C} | H_{0}) < \\alpha"
-        }
-      </BlockMath>
-      In other words, we must reject the null hypothesis if the probability of
-      observing a difference in conversion rates between the treatment and
-      control groups, assuming the null hypothesis to be true, is less than our
-      significance level <InlineMath>{"\\alpha"}</InlineMath>. To obtain this
-      probability we must first calculate the mean and variance of the sampling
-      distribution of the difference in conversion rates between the treatment
-      and control groups. Following the rules of expectation and variance for
-      normally distributed independent random variables, we can calculate the
-      mean and variance of the sampling distribution of the difference in
-      conversion rates as follows:
-      <BlockMath>
-        {"{\\mu}_{\\bar{p}_{T} - \\bar{p}_{C}} = p_{T} - p_{C}" +
+        {"\\bar{X}_{\\Delta} = \\bar{X}_{T} - \\bar{X}_{C} \\sim \\text{Normal}({\\mu}_{\\Delta}, \\sigma_{\\Delta}^2)" +
           "\\\\[2.5mm]" +
-          "\\sigma_{\\bar{p}_{T} - \\bar{p}_{C}}^2 = \\frac{p_{T}(1-p_{T})}{n_{T}} + \\frac{p_{C}(1-p_{C})}{n_{C}}"}
-      </BlockMath>
-      Under the null hypothesis, we can assume that{" "}
-      <InlineMath>{"p_{T} = p_{C}"}</InlineMath> and therefore the mean and
-      variance of the sampling distribution of the difference in conversion
-      rates simplifies to:
-      <BlockMath>
-        {"{\\mu}_{\\bar{p}_{T} - \\bar{p}_{C}} = 0" +
+          "{\\mu}_{\\Delta} = p_{T} - p_{C}" +
           "\\\\[2.5mm]" +
-          "\\sigma_{\\bar{p}_{T} - \\bar{p}_{C}}^2 = \\frac{p_{T}(1-p_{T})}{n_{T}} + \\frac{p_{C}(1-p_{C})}{n_{C}} = \\frac{p_{T}(1-p_{T})}{n_{T}} + \\frac{p_{T}(1-p_{T})}{n_{C}} = p_{T}(1-p_{T})(\\frac{1}{n_{T}} + \\frac{1}{n_{C}})"}
+          "\\sigma_{\\Delta}^2 = \\frac{p_{T}(1-p_{T})}{n_{T}} + \\frac{p_{C}(1-p_{C})}{n_{C}}"}
       </BlockMath>
-      If we now assume a baseline conversion rate of 0.50 (50%) for the control
-      group and a minimum detectable effect of 0.05 (5%), we can calculate the
-      sample size required to detect a statistically significant difference in
-      conversion rates between the treatment and control groups. We can do this
-      by first defining the minimum detectable effect as follows:
+      We can simplify this equation based on our assumptions of a 50/50 split
+      between treatment and control and assuming equal variances:
       <BlockMath>
-        {"\\text{Minimum Detectable Effect} = \\Delta = p_{T} - p_{C} = 0.05"}
+        {"\\bar{X}_{\\Delta} = \\bar{X}_{T} - \\bar{X}_{C} \\sim \\text{Normal}({\\mu}_{\\Delta}, \\sigma_{\\Delta}^2)" +
+          "\\\\[2.5mm]" +
+          "{\\mu}_{\\Delta} = p - p = 0" +
+          "\\\\[2.5mm]" +
+          "\\sigma_{\\Delta}^2 = \\frac{2\\sigma^2}{N} = \\frac{2p(1-p)}{N}"}
       </BlockMath>
-      We can then substitute this into the variance of the sampling distribution
-      of the difference in conversion rates to obtain: Finally, we can calculate
-      the probability of observing a difference in conversion rates between the
-      treatment and control groups, assuming the null hypothesis to be true, as
-      follows:
+      Where our 50/50 split is represented by{" "}
+      <InlineMath>{"n_{T} = n_{C} = N"}</InlineMath> and equal variances by{" "}
+      <InlineMath>
+        {"\\sigma_{\\bar{p}_{T}}^2 = \\sigma_{\\bar{p}_{C}}^2 = \\sigma^2"}
+      </InlineMath>
+      . With our uplift distribution defined, we can now begin deriving the
+      sample size formula by reversing the p-value calculation of a one-sided
+      test to determine the minimum sample size required to detect a
+      statistically significant uplift. We begin this by defining our null and alternative
+      hypotheses as follows:
       <BlockMath>
-        {
-          "p(\\bar{p}_{T} - \\bar{p}_{C} | H_{0}) = \\frac{\\bar{p}_{T} - \\bar{p}_{C}}{\\sqrt{\\frac{p_{T}(1-p_{T})}{n_{T}} + \\frac{p_{C}(1-p_{C})}{n_{C}}}}"
-        }
+        {"H_{0}: \\mu_{\\Delta} = 0" +
+          "\\\\[2.5mm]" +
+          "H_{1}: \\mu_{\\Delta} > 0"}
       </BlockMath>
-      We can now use this probability to define our decision criteria for
-      rejecting the null hypothesis:
+
+      Now the key idea
       <BlockMath>
-        {
-          "\\text{Reject } H_{0} \\text{ if } \\frac{\\bar{p}_{T} - \\bar{p}_{C}}{\\sqrt{\\frac{p_{T}(1-p_{T})}{n_{T}} + \\frac{p_{C}(1-p_{C})}{n_{C}}}} > z_{\\alpha/2}"
-        }
-      </BlockMath>
-      Where <InlineMath>{"z_{\\alpha/2}"}</InlineMath> is the{" "}
-      <InlineMath>{"\\alpha/2"}</InlineMath> quantile of the standard normal
-      distribution. This is the same as saying:
-      <br />
-      <br />
-      <BlockMath>
-        {
-          "Sample Size = \\frac{2 \\times (z_{\\alpha/2} + z_{\\beta})^2 \\times \\sigma^2}{\\Delta^2}"
-        }
+        {"P(\\bar{X}_{\\Delta} \\geq \\bar{x}_{\\Delta} | H_{1}) \\leq P(\\bar{X}_{\\Delta} \\geq \\bar{x}_{\\text{crit}} | H_{1}) = 1-\\beta"}
       </BlockMath>
     </p>
   </div>
