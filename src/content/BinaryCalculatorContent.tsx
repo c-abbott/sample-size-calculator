@@ -16,16 +16,22 @@ const BinaryCalculatorContent: React.FC = () => (
       <br />
       <br />
       Each unit of our population groups have a binary outcome, either they
-      convert or they do not. This means the population distributions for this
-      scenario follow a Bernoulli distribution:
+      convert or they do not. This means the population distributions for the
+      random variables <InlineMath>{"X_{C}"}</InlineMath> and{" "}
+      <InlineMath>{"X_{T}"}</InlineMath> follow a Bernoulli distribution:
       <BlockMath>
         {"\\text{Control Population Distribution}" +
+          "\\\\[2mm]" +
+          "X_{C} \\sim \\text{Bernoulli}(\\mu_{C}, \\sigma_{C}^2)" +
           "\\\\" +
           "\\mu_{C} = p_{C}" +
           "\\\\" +
           "\\sigma_{C}^2 = p_{C}(1-p_{C})" +
           "\\\\[5mm]" +
           "\\text{Treatment Population Distribution}" +
+          "\\\\[2mm]" +
+          "X_{T} \\sim \\text{Bernoulli}(\\mu_{T}, \\sigma_{T}^2)" +
+          "\\\\" +
           "\\\\" +
           "\\mu_{T} = p_{T}" +
           "\\\\" +
@@ -51,12 +57,16 @@ const BinaryCalculatorContent: React.FC = () => (
       with the following means and variances:
       <BlockMath>
         {"\\text{Control Sample Distribution}" +
+          "\\\\[2mm]" +
+          "\\bar{X_{C}} \\sim \\text{Normal}({\\mu}_{\\bar{p}_{C}}, \\sigma_{\\bar{p}_{C}}^2)" +
           "\\\\" +
           "{\\mu}_{\\bar{p}_{C}} = p_{C}" +
           "\\\\[2.5mm]" +
           "\\sigma_{\\bar{p}_{C}}^2 = \\frac{p_{C}(1-p_{C})}{n_{C}}" +
           "\\\\[5mm]" +
           "\\text{Treatment Sample Distribution}" +
+          "\\\\[2mm]" +
+          "\\bar{X_{T}} \\sim \\text{Normal}({\\mu}_{\\bar{p}_{T}}, \\sigma_{\\bar{p}_{T}}^2)" +
           "\\\\" +
           "{\\mu}_{\\bar{p}_{T}} = p_{T}" +
           "\\\\[2.5mm]" +
@@ -64,7 +74,8 @@ const BinaryCalculatorContent: React.FC = () => (
       </BlockMath>
       Coming back to our example, the objective of the A/B test is to determine
       whether the new feature causes a statistically significant increase in
-      conversion. To do this, we must first define our null hypothesis:
+      conversion. To do this, we must first define our null hypothesis and
+      alternative hypotheses:
       <BlockMath>{"H_{0}: p_{T} - p_{C} = 0"}</BlockMath>
       From this definition, we can then define the decision criteria to reject
       the null hypothesis and therefore declare a statistically significant
@@ -90,7 +101,6 @@ const BinaryCalculatorContent: React.FC = () => (
           "\\\\[2.5mm]" +
           "\\sigma_{\\bar{p}_{T} - \\bar{p}_{C}}^2 = \\frac{p_{T}(1-p_{T})}{n_{T}} + \\frac{p_{C}(1-p_{C})}{n_{C}}"}
       </BlockMath>
-      
       Under the null hypothesis, we can assume that{" "}
       <InlineMath>{"p_{T} = p_{C}"}</InlineMath> and therefore the mean and
       variance of the sampling distribution of the difference in conversion
@@ -100,25 +110,19 @@ const BinaryCalculatorContent: React.FC = () => (
           "\\\\[2.5mm]" +
           "\\sigma_{\\bar{p}_{T} - \\bar{p}_{C}}^2 = \\frac{p_{T}(1-p_{T})}{n_{T}} + \\frac{p_{C}(1-p_{C})}{n_{C}} = \\frac{p_{T}(1-p_{T})}{n_{T}} + \\frac{p_{T}(1-p_{T})}{n_{C}} = p_{T}(1-p_{T})(\\frac{1}{n_{T}} + \\frac{1}{n_{C}})"}
       </BlockMath>
-      If we now assume a baseline conversion rate of 0.50 (50%) for the control group and a minimum detectable effect of 0.05 (5%), we can calculate the sample size required to detect a statistically significant difference in conversion rates between the treatment and control groups. We can do this by first defining the minimum detectable effect as follows:
+      If we now assume a baseline conversion rate of 0.50 (50%) for the control
+      group and a minimum detectable effect of 0.05 (5%), we can calculate the
+      sample size required to detect a statistically significant difference in
+      conversion rates between the treatment and control groups. We can do this
+      by first defining the minimum detectable effect as follows:
       <BlockMath>
-        {
-          "\\text{Minimum Detectable Effect} = \\Delta = p_{T} - p_{C} = 0.05"
-        }
+        {"\\text{Minimum Detectable Effect} = \\Delta = p_{T} - p_{C} = 0.05"}
       </BlockMath>
-      We can then substitute this into the variance of the sampling distribution of the difference in conversion rates to obtain:
-
-
- 
-
-
-
-
-
-
-      Finally, we can calculate the probability of observing a difference in
-      conversion rates between the treatment and control groups, assuming the
-      null hypothesis to be true, as follows:
+      We can then substitute this into the variance of the sampling distribution
+      of the difference in conversion rates to obtain: Finally, we can calculate
+      the probability of observing a difference in conversion rates between the
+      treatment and control groups, assuming the null hypothesis to be true, as
+      follows:
       <BlockMath>
         {
           "p(\\bar{p}_{T} - \\bar{p}_{C} | H_{0}) = \\frac{\\bar{p}_{T} - \\bar{p}_{C}}{\\sqrt{\\frac{p_{T}(1-p_{T})}{n_{T}} + \\frac{p_{C}(1-p_{C})}{n_{C}}}}"
@@ -134,15 +138,13 @@ const BinaryCalculatorContent: React.FC = () => (
       Where <InlineMath>{"z_{\\alpha/2}"}</InlineMath> is the{" "}
       <InlineMath>{"\\alpha/2"}</InlineMath> quantile of the standard normal
       distribution. This is the same as saying:
-
-
       <br />
       <br />
       <BlockMath>
-      {
-        "Sample Size = \\frac{2 \\times (z_{\\alpha/2} + z_{\\beta})^2 \\times \\sigma^2}{\\Delta^2}"
-      }
-    </BlockMath>
+        {
+          "Sample Size = \\frac{2 \\times (z_{\\alpha/2} + z_{\\beta})^2 \\times \\sigma^2}{\\Delta^2}"
+        }
+      </BlockMath>
     </p>
   </div>
 );
