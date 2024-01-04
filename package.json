@@ -14,12 +14,14 @@
     "@stdlib/stats-base-dists-normal-cdf": "^0.1.0",
     "@stdlib/stdlib": "^0.1.0",
     "@tailwindcss/forms": "^0.5.7",
+    "d3": "^7.8.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-katex": "^3.0.1"
   },
   "devDependencies": {
+    "@types/d3": "^7.4.3",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@types/react-helmet": "^6.1.9",
