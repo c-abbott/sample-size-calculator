@@ -5,11 +5,16 @@ import { select } from "d3-selection";
 const NormalDistributionChart: React.FC = () => {
   const d3Container = useRef<SVGSVGElement | null>(null);
 
-  useEffect(() => {
-    if (d3Container.current) {
+  const drawChart = () => {
+    if (d3Container.current && d3Container.current.parentElement) {
+      // Clear existing SVG content
+      select(d3Container.current).selectAll("*").remove();
+
+      // Dynamically calculate width
       const svg = select(d3Container.current);
+      const containerWidth = d3Container.current.parentElement.offsetWidth;
       const margin = { top: 8, right: 24, bottom: 8, left: 24 };
-      const width = 1200 - margin.left - margin.right;
+      const width = containerWidth - margin.left - margin.right;
       const height = 500 - margin.top - margin.bottom;
 
       // Set up the SVG with proper margins
@@ -46,15 +51,34 @@ const NormalDistributionChart: React.FC = () => {
         .append("path")
         .datum(data) // Bind data to the path
         .attr("fill", "none")
-        .attr("stroke", "steelblue")
-        .attr("stroke-width", 6)
+        .attr("stroke", "#bcfd49")
+        .attr("stroke-width", 3)
         .attr("d", lineGenerator); // Use the updated line generator
     }
+  };
+
+  useEffect(() => {
+    drawChart(); // Initial draw
+
+    // Function to handle window resize
+    const handleResize = () => {
+      drawChart(); // Redraw chart on resize
+    };
+
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
-    <div className="container mx-auto">
-      <svg className="m-4" ref={d3Container} />
+    <div className="py-4 bg-dark-900 text-primary">
+      <div className="bg-dark-800 p-4 shadow-md rounded-md relative overflow-hidden">
+        <svg className="w-full" ref={d3Container} />
+      </div>
     </div>
   );
 };
