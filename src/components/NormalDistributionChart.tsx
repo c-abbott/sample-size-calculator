@@ -7,32 +7,29 @@ const NormalDistributionChart: React.FC = () => {
 
   const drawChart = () => {
     if (d3Container.current && d3Container.current.parentElement) {
-      // Clear existing SVG content
       select(d3Container.current).selectAll("*").remove();
 
-      // Dynamically calculate width
-      const svg = select(d3Container.current);
       const containerWidth = d3Container.current.parentElement.offsetWidth;
-      const margin = { top: 8, right: 24, bottom: 8, left: 24 };
+      const margin = { top: 8, right: 48, bottom: 30, left: 48 }; // Increased bottom margin
       const width = containerWidth - margin.left - margin.right;
       const height = 500 - margin.top - margin.bottom;
 
-      // Set up the SVG with proper margins
-      svg
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+      const svg = select(d3Container.current)
+        .attr("width", containerWidth)
+        .attr("height", height + margin.top + margin.bottom);
+
+      const chartGroup = svg
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
-      // Create the X-axis scale
       const x = d3.scaleLinear().domain([-2, 2]).range([0, width]);
+      const y = d3.scaleLinear().domain([0, 0.5]).range([height, 0]); // y-scale
 
-      svg
+      chartGroup
         .append("g")
         .attr("transform", `translate(0,${height})`)
         .call(d3.axisBottom(x));
 
-      // Calculate normal distribution data
       const data = d3.range(-2, 2, 0.01).map((x) => {
         return {
           x: x,
@@ -40,20 +37,18 @@ const NormalDistributionChart: React.FC = () => {
         };
       });
 
-      // Update the line generator
       const lineGenerator = d3
         .line<{ x: number; y: number }>()
         .x((d) => x(d.x))
-        .y((d) => height - d.y * 1000); // Scale the y value
+        .y((d) => y(d.y)); // Use y-scale for y values
 
-      // Add the line
-      svg
+      chartGroup
         .append("path")
-        .datum(data) // Bind data to the path
+        .datum(data)
         .attr("fill", "none")
         .attr("stroke", "#bcfd49")
         .attr("stroke-width", 3)
-        .attr("d", lineGenerator); // Use the updated line generator
+        .attr("d", lineGenerator);
     }
   };
 
