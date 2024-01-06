@@ -24,10 +24,9 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({ mean=
         .attr("width", containerWidth)
         .attr("height", height + margin.top + margin.bottom);
 
-      const chartGroup = svg
+        const chartGroup = svg
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
-
       const x = d3.scaleLinear().domain([mean - 4 * standardDeviation, mean + 4 * standardDeviation]).range([0, width]);
 
       const data = d3.range(mean - 4 * standardDeviation, mean + 4 * standardDeviation, 0.01).map((x) => {
@@ -40,10 +39,24 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({ mean=
       const maxY = d3.max(data, (d) => d.y) || 0;
       const y = d3.scaleLinear().domain([0, maxY]).range([height, 0]);
 
+      // Append X-axis
       chartGroup
         .append("g")
         .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(x));
+        .call(d3.axisBottom(x))
+        .selectAll("text")
+        .style("font-size", "16px"); // Increase font size for x-axis labels
+  
+      // Append Y-axis
+      chartGroup
+        .append("g")
+        .call(d3.axisLeft(y))
+        .selectAll("text")
+        .style("font-size", "16px"); // Increase font size for y-axis labels
+  
+      // Increase axis line width
+      chartGroup.selectAll(".domain, .tick line")
+        .style("stroke-width", "2px"); // Increase stroke width for axis lines and ticks
 
       const lineGenerator = d3
         .line<{ x: number; y: number }>()

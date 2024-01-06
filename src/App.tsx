@@ -42,7 +42,7 @@ function App() {
             <BinaryCalculatorContent />
           </ExpandableContent>
         </div>
-        <NormalDistributionChart />
+        <NormalDistributionChart mean={10} variance={1} />
       </div>
     </div>
   );
