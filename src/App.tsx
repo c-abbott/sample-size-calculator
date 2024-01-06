@@ -3,6 +3,7 @@ import BinarySampleSizeCalculator from "./components/BinarySampleSizeCalculator"
 import CalculatorContext from "./components/CalculatorContext";
 import ContinuousSampleSizeCalculator from "./components/ContinuousSampleSizeCalculator";
 import ExpandableContent from "./components/ExpandableContent";
+import NormalDistributionChart from "./components/NormalDistributionChart";
 import { Helmet } from "react-helmet";
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
             <BinaryCalculatorContent />
           </ExpandableContent>
         </div>
+        <NormalDistributionChart />
       </div>
     </div>
   );
