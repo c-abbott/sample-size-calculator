@@ -2,7 +2,12 @@ import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import { select } from "d3-selection";
 
-const NormalDistributionChart: React.FC = () => {
+interface NormalDistributionChartProps {
+  mean?: number;
+  variance?: number;
+}
+
+const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({ mean=0, variance=1 }) => {
   const d3Container = useRef<SVGSVGElement | null>(null);
 
   const drawChart = () => {
@@ -10,9 +15,10 @@ const NormalDistributionChart: React.FC = () => {
       select(d3Container.current).selectAll("*").remove();
 
       const containerWidth = d3Container.current.parentElement.offsetWidth;
-      const margin = { top: 8, right: 48, bottom: 30, left: 48 }; // Increased bottom margin
+      const margin = { top: 8, right: 48, bottom: 30, left: 48 };
       const width = containerWidth - margin.left - margin.right;
       const height = 500 - margin.top - margin.bottom;
+      const standardDeviation = Math.sqrt(variance);
 
       const svg = select(d3Container.current)
         .attr("width", containerWidth)
@@ -22,25 +28,27 @@ const NormalDistributionChart: React.FC = () => {
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
-      const x = d3.scaleLinear().domain([-2, 2]).range([0, width]);
-      const y = d3.scaleLinear().domain([0, 0.5]).range([height, 0]); // y-scale
+      const x = d3.scaleLinear().domain([mean - 4 * standardDeviation, mean + 4 * standardDeviation]).range([0, width]);
+
+      const data = d3.range(mean - 4 * standardDeviation, mean + 4 * standardDeviation, 0.01).map((x) => {
+        return {
+          x: x,
+          y: (1 / (standardDeviation * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * ((x - mean) / standardDeviation) ** 2),
+        };
+      });
+
+      const maxY = d3.max(data, (d) => d.y) || 0;
+      const y = d3.scaleLinear().domain([0, maxY]).range([height, 0]);
 
       chartGroup
         .append("g")
         .attr("transform", `translate(0,${height})`)
         .call(d3.axisBottom(x));
 
-      const data = d3.range(-2, 2, 0.01).map((x) => {
-        return {
-          x: x,
-          y: (1 / Math.sqrt(2 * Math.PI)) * Math.exp(-0.5 * x * x),
-        };
-      });
-
       const lineGenerator = d3
         .line<{ x: number; y: number }>()
         .x((d) => x(d.x))
-        .y((d) => y(d.y)); // Use y-scale for y values
+        .y((d) => y(d.y));
 
       chartGroup
         .append("path")
@@ -53,21 +61,18 @@ const NormalDistributionChart: React.FC = () => {
   };
 
   useEffect(() => {
-    drawChart(); // Initial draw
+    drawChart();
 
-    // Function to handle window resize
     const handleResize = () => {
-      drawChart(); // Redraw chart on resize
+      drawChart();
     };
 
-    // Add event listener
     window.addEventListener("resize", handleResize);
 
-    // Cleanup
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [mean, variance]); // Add mean and variance as dependencies
 
   return (
     <div className="py-4 bg-dark-900 text-primary">
