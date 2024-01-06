@@ -8,8 +8,8 @@ const NormalDistributionChart: React.FC = () => {
   useEffect(() => {
     if (d3Container.current) {
       const svg = select(d3Container.current);
-      const margin = { top: 2, right: 30, bottom: 30, left: 40 };
-      const width = 450 - margin.left - margin.right;
+      const margin = { top: 8, right: 24, bottom: 8, left: 24 };
+      const width = 1200 - margin.left - margin.right;
       const height = 500 - margin.top - margin.bottom;
 
       // Set up the SVG with proper margins
@@ -20,7 +20,7 @@ const NormalDistributionChart: React.FC = () => {
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
       // Create the X-axis scale
-      const x = d3.scaleLinear().domain([-5, 5]).range([0, width]);
+      const x = d3.scaleLinear().domain([-2, 2]).range([0, width]);
 
       svg
         .append("g")
@@ -28,7 +28,7 @@ const NormalDistributionChart: React.FC = () => {
         .call(d3.axisBottom(x));
 
       // Calculate normal distribution data
-      const data = d3.range(-4, 4, 0.01).map((x) => {
+      const data = d3.range(-2, 2, 0.01).map((x) => {
         return {
           x: x,
           y: (1 / Math.sqrt(2 * Math.PI)) * Math.exp(-0.5 * x * x),
