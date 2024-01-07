@@ -1,9 +1,8 @@
 import BinaryCalculatorContent from "./content/BinaryCalculatorContent";
 import BinarySampleSizeCalculator from "./components/BinarySampleSizeCalculator";
 import CalculatorContext from "./components/CalculatorContext";
-import ContinuousSampleSizeCalculator from "./components/ContinuousSampleSizeCalculator";
+import ContinuousCalculatorState from "./components/ContinuousCalculatorState";
 import ExpandableContent from "./components/ExpandableContent";
-import NormalDistributionChart from "./components/NormalDistributionChart";
 import { Helmet } from "react-helmet";
 
 function App() {
@@ -37,12 +36,11 @@ function App() {
             title="Continuous Sample Size Calculator"
             text=" Use this calculator to determine the necessary sample size for running experiments concerned with assessing the difference in means. Examples: Average Session Duration, Revenue per User, Customer Lifetime Value (CLV), Time to Conversion."
           />
-          <ContinuousSampleSizeCalculator />
+          <ContinuousCalculatorState /> {/* Use the parent component here */}
           <ExpandableContent title="How does this work?">
             <BinaryCalculatorContent />
           </ExpandableContent>
         </div>
-        <NormalDistributionChart mean={10} variance={1} />
       </div>
     </div>
   );
