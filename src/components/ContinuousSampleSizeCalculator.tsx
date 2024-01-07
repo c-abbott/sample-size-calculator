@@ -6,14 +6,20 @@ import ParameterInputCard from "./ParameterInputCard";
 import PercentageSlider from "./PercentageSlider";
 import SampleSizeDisplay from "./SampleSizeDisplay";
 
-const ContinuousSampleSizeCalculator: React.FC = () => {
+interface ContinuousSampleSizeCalculatorProps {
+  avg: string;
+  setAvg: (value: string) => void;
+  sd: string;
+  setSd: (value: string) => void;
+}
+
+const ContinuousSampleSizeCalculator: React.FC<
+  ContinuousSampleSizeCalculatorProps
+> = ({ avg, setAvg, sd, setSd }) => {
   const [delta, setDelta] = useState<string>("5");
-  const [avg, setAvg] = useState<string>("7000");
-  const [sd, setSd] = useState<string>("2500");
   const [alpha, setAlpha] = useState<string>("5");
   const [power, setPower] = useState<string>("80");
   const [sampleSize, setSampleSize] = useState<number | null>(null);
-
   const handleDeltaChange = (value: string) => {
     const numericValue = parseFloat(value.replace(/,/g, ""));
     setDelta(isNaN(numericValue) ? "" : numericValue.toString());
