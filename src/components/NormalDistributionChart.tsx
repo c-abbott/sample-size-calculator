@@ -7,7 +7,7 @@ interface NormalDistributionChartProps {
   variance?: number;
 }
 
-const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({ mean=0, variance=1 }) => {
+const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({ mean = 7000, variance = 1 }) => {
   const d3Container = useRef<SVGSVGElement | null>(null);
 
   const drawChart = () => {
@@ -24,10 +24,13 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({ mean=
         .attr("width", containerWidth)
         .attr("height", height + margin.top + margin.bottom);
 
-        const chartGroup = svg
+      const chartGroup = svg
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
-      const x = d3.scaleLinear().domain([mean - 4 * standardDeviation, mean + 4 * standardDeviation]).range([0, width]);
+
+      const x = d3.scaleLinear()
+        .domain([mean - 4 * standardDeviation, mean + 4 * standardDeviation])
+        .range([0, width]);
 
       const data = d3.range(mean - 4 * standardDeviation, mean + 4 * standardDeviation, 0.01).map((x) => {
         return {
@@ -36,32 +39,9 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({ mean=
         };
       });
 
-      const maxY = d3.max(data, (d) => d.y) || 0;
-      const y = d3.scaleLinear().domain([0, maxY]).range([height, 0]);
-
-      // Append X-axis
-      chartGroup
-        .append("g")
-        .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(x))
-        .selectAll("text")
-        .style("font-size", "16px"); // Increase font size for x-axis labels
-  
-      // Append Y-axis
-      chartGroup
-        .append("g")
-        .call(d3.axisLeft(y))
-        .selectAll("text")
-        .style("font-size", "16px"); // Increase font size for y-axis labels
-  
-      // Increase axis line width
-      chartGroup.selectAll(".domain, .tick line")
-        .style("stroke-width", "2px"); // Increase stroke width for axis lines and ticks
-
-      const lineGenerator = d3
-        .line<{ x: number; y: number }>()
+      const lineGenerator = d3.line<{ x: number; y: number }>()
         .x((d) => x(d.x))
-        .y((d) => y(d.y));
+        .y((d) => height - d.y * 100000000);  // Adjust y-positioning as needed
 
       chartGroup
         .append("path")
@@ -70,6 +50,14 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({ mean=
         .attr("stroke", "#bcfd49")
         .attr("stroke-width", 3)
         .attr("d", lineGenerator);
+
+      // Append X-axis
+      chartGroup
+        .append("g")
+        .attr("transform", `translate(0,${height})`)
+        .call(d3.axisBottom(x))
+        .selectAll("text")
+        .style("font-size", "16px");
     }
   };
 
@@ -85,7 +73,7 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({ mean=
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [mean, variance]); // Add mean and variance as dependencies
+  }, [mean, variance]);
 
   return (
     <div className="py-4 bg-dark-900 text-primary">
