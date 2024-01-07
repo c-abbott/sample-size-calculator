@@ -15,11 +15,11 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({ mean 
       select(d3Container.current).selectAll("*").remove();
 
       const containerWidth = d3Container.current.parentElement.offsetWidth;
-      const margin = { top: 8, right: 48, bottom: 30, left: 48 };
+      const margin = { top: 16, right: 48, bottom: 24, left: 48 };
       const width = containerWidth - margin.left - margin.right;
       const height = 500 - margin.top - margin.bottom;
       const standardDeviation = Math.sqrt(variance);
-      const xRange = 3 * standardDeviation;  // Adjust this range based on visualization needs
+      const xRange = 4 * standardDeviation;  // Adjust this range based on visualization needs
 
       const svg = select(d3Container.current)
         .attr("width", containerWidth)
