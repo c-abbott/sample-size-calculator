@@ -19,6 +19,7 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({ mean 
       const width = containerWidth - margin.left - margin.right;
       const height = 500 - margin.top - margin.bottom;
       const standardDeviation = Math.sqrt(variance);
+      const xRange = 3 * standardDeviation;  // Adjust this range based on visualization needs
 
       const svg = select(d3Container.current)
         .attr("width", containerWidth)
@@ -29,23 +30,26 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({ mean 
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
       const x = d3.scaleLinear()
-        .domain([mean - 4 * standardDeviation, mean + 4 * standardDeviation])
+        .domain([mean - xRange, mean + xRange])
         .range([0, width]);
 
-      const data = d3.range(mean - 4 * standardDeviation, mean + 4 * standardDeviation, 0.01).map((x) => {
-        return {
-          x: x,
-          y: (1 / (standardDeviation * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * ((x - mean) / standardDeviation) ** 2),
-        };
-      });
-
-      const lineGenerator = d3.line<{ x: number; y: number }>()
-        .x((d) => x(d.x))
-        .y((d) => height - d.y * 100000000);  // Adjust y-positioning as needed
+        const data = d3.range(mean - xRange, mean + xRange, standardDeviation / 100).map((x) => {
+          return {
+            x: x,
+            y: (1 / (standardDeviation * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * ((x - mean) / standardDeviation) ** 2),
+          };
+        });
+    
+        const maxY = d3.max(data, (d) => d.y) || 0;
+        const normalizedData = data.map(d => ({ x: d.x, y: d.y / maxY * height * 0.95 })); // Normalize y-values
+    
+        const lineGenerator = d3.line<{ x: number; y: number }>()
+          .x((d) => x(d.x))
+          .y((d) => height - d.y);  // Adjust for normalized y-values
 
       chartGroup
         .append("path")
-        .datum(data)
+        .datum(normalizedData)
         .attr("fill", "none")
         .attr("stroke", "#bcfd49")
         .attr("stroke-width", 3)
