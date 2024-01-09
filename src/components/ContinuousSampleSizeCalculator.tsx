@@ -11,12 +11,13 @@ interface ContinuousSampleSizeCalculatorProps {
   setAvg: (value: string) => void;
   sd: string;
   setSd: (value: string) => void;
+  delta: string;
+  setDelta: (value: string) => void;
 }
 
 const ContinuousSampleSizeCalculator: React.FC<
   ContinuousSampleSizeCalculatorProps
-> = ({ avg, setAvg, sd, setSd }) => {
-  const [delta, setDelta] = useState<string>("5");
+> = ({ avg, setAvg, sd, setSd, delta, setDelta}) => {
   const [alpha, setAlpha] = useState<string>("5");
   const [power, setPower] = useState<string>("80");
   const [sampleSize, setSampleSize] = useState<number | null>(null);

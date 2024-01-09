@@ -5,68 +5,95 @@ import { select } from "d3-selection";
 interface NormalDistributionChartProps {
   mean?: number;
   variance?: number;
+  alternativeMean?: number;
 }
 
 const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
   mean = 7000,
   variance = 1,
+  alternativeMean=1
 }) => {
   const d3Container = useRef<SVGSVGElement | null>(null);
 
   const drawChart = () => {
     if (d3Container.current && d3Container.current.parentElement) {
       select(d3Container.current).selectAll("*").remove();
-
+  
       const containerWidth = d3Container.current.parentElement.offsetWidth;
       const margin = { top: 16, right: 48, bottom: 24, left: 48 };
       const width = containerWidth - margin.left - margin.right;
       const height = 500 - margin.top - margin.bottom;
-      const standardDeviation = Math.sqrt(variance);
-      const xRange = 4 * standardDeviation; // Adjust this range based on visualization needs
-
+      const standardDeviation = Math.sqrt(variance || 1);
+      const xRange = 4 * standardDeviation;
+  
+      // Calculate the extremes for both distributions
+      let minX = mean ? mean - xRange : -xRange;
+      let maxX = mean ? mean + xRange : xRange;
+      if (alternativeMean !== undefined) {
+        minX = Math.min(minX, alternativeMean - xRange);
+        maxX = Math.max(maxX, alternativeMean + xRange);
+      }
+  
+      // Set the x-axis to accommodate both distributions
+      const x = d3.scaleLinear().domain([minX, maxX]).range([0, width]);
+  
       const svg = select(d3Container.current)
         .attr("width", containerWidth)
         .attr("height", height + margin.top + margin.bottom);
-
+  
       const chartGroup = svg
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
-
-      const x = d3
-        .scaleLinear()
-        .domain([mean - xRange, mean + xRange])
-        .range([0, width]);
-
-      const data = d3
-        .range(mean - xRange, mean + xRange, standardDeviation / 100)
-        .map((x) => {
-          return {
-            x: x,
+  
+      // Function to generate data for a normal distribution
+      const generateData = (meanValue: number) => {
+        return d3
+          .range(meanValue - xRange, meanValue + xRange, standardDeviation / 100)
+          .map((xVal) => ({
+            x: xVal,
             y:
               (1 / (standardDeviation * Math.sqrt(2 * Math.PI))) *
-              Math.exp(-0.5 * ((x - mean) / standardDeviation) ** 2),
-          };
-        });
-
-      const maxY = d3.max(data, (d) => d.y) || 0;
-      const normalizedData = data.map((d) => ({
-        x: d.x,
-        y: (d.y / maxY) * height * 0.95,
-      })); // Normalize y-values
-
-      const lineGenerator = d3
-        .line<{ x: number; y: number }>()
-        .x((d) => x(d.x))
-        .y((d) => height - d.y); // Adjust for normalized y-values
-
-      chartGroup
-        .append("path")
-        .datum(normalizedData)
-        .attr("fill", "none")
-        .attr("stroke", "#bcfd49")
-        .attr("stroke-width", 3)
-        .attr("d", lineGenerator);
-
+              Math.exp(-0.5 * ((xVal - meanValue) / standardDeviation) ** 2),
+          }));
+      };
+  
+      // Function to normalize data
+      const normalizeData = (data: { x: number; y: number }[]) => {
+        const maxY = d3.max(data, (d) => d.y) || 0;
+        return data.map((d) => ({
+          x: d.x,
+          y: (d.y / maxY) * height * 0.95,
+        }));
+      };
+  
+      // Function to draw a distribution
+      const drawDistribution = (data: { x: number; y: number }[], color: string) => {
+        const lineGenerator = d3
+          .line<{ x: number; y: number }>()
+          .x((d) => x(d.x))
+          .y((d) => height - d.y);
+  
+        chartGroup
+          .append("path")
+          .datum(data)
+          .attr("fill", "none")
+          .attr("stroke", color)
+          .attr("stroke-width", 3)
+          .attr("d", lineGenerator);
+      };
+  
+      // Draw the original distribution
+      if (mean !== undefined) {
+        const data = normalizeData(generateData(mean));
+        drawDistribution(data, "#bcfd49"); // Original distribution color
+      }
+  
+      // Draw the alternative distribution if alternativeMean is provided
+      if (alternativeMean !== undefined) {
+        const altData = normalizeData(generateData(alternativeMean));
+        drawDistribution(altData, "#ff6347"); // Alternative distribution color
+      }
+  
       // Append X-axis
       chartGroup
         .append("g")
@@ -76,6 +103,7 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
         .style("font-size", "16px");
     }
   };
+  
 
   useEffect(() => {
     drawChart();
@@ -89,7 +117,7 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [mean, variance]);
+  }, [mean, variance, alternativeMean]);
 
   return (
     <div className="py-4 bg-dark-900 text-primary">
