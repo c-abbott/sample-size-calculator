@@ -7,7 +7,10 @@ interface NormalDistributionChartProps {
   variance?: number;
 }
 
-const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({ mean = 7000, variance = 1 }) => {
+const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
+  mean = 7000,
+  variance = 1,
+}) => {
   const d3Container = useRef<SVGSVGElement | null>(null);
 
   const drawChart = () => {
@@ -19,7 +22,7 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({ mean 
       const width = containerWidth - margin.left - margin.right;
       const height = 500 - margin.top - margin.bottom;
       const standardDeviation = Math.sqrt(variance);
-      const xRange = 4 * standardDeviation;  // Adjust this range based on visualization needs
+      const xRange = 4 * standardDeviation; // Adjust this range based on visualization needs
 
       const svg = select(d3Container.current)
         .attr("width", containerWidth)
@@ -29,23 +32,32 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({ mean 
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
-      const x = d3.scaleLinear()
+      const x = d3
+        .scaleLinear()
         .domain([mean - xRange, mean + xRange])
         .range([0, width]);
 
-        const data = d3.range(mean - xRange, mean + xRange, standardDeviation / 100).map((x) => {
+      const data = d3
+        .range(mean - xRange, mean + xRange, standardDeviation / 100)
+        .map((x) => {
           return {
             x: x,
-            y: (1 / (standardDeviation * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * ((x - mean) / standardDeviation) ** 2),
+            y:
+              (1 / (standardDeviation * Math.sqrt(2 * Math.PI))) *
+              Math.exp(-0.5 * ((x - mean) / standardDeviation) ** 2),
           };
         });
-    
-        const maxY = d3.max(data, (d) => d.y) || 0;
-        const normalizedData = data.map(d => ({ x: d.x, y: d.y / maxY * height * 0.95 })); // Normalize y-values
-    
-        const lineGenerator = d3.line<{ x: number; y: number }>()
-          .x((d) => x(d.x))
-          .y((d) => height - d.y);  // Adjust for normalized y-values
+
+      const maxY = d3.max(data, (d) => d.y) || 0;
+      const normalizedData = data.map((d) => ({
+        x: d.x,
+        y: (d.y / maxY) * height * 0.95,
+      })); // Normalize y-values
+
+      const lineGenerator = d3
+        .line<{ x: number; y: number }>()
+        .x((d) => x(d.x))
+        .y((d) => height - d.y); // Adjust for normalized y-values
 
       chartGroup
         .append("path")
