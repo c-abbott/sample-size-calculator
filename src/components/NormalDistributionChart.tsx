@@ -91,7 +91,7 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
       // Draw the alternative distribution if alternativeMean is provided
       if (alternativeMean !== undefined) {
         const altData = normalizeData(generateData(alternativeMean));
-        drawDistribution(altData, "#ff6347"); // Alternative distribution color
+        drawDistribution(altData, "#a970fd"); // lavender
       }
   
       // Append X-axis
