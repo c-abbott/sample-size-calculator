@@ -112,6 +112,8 @@ const BinaryCalculatorContent: React.FC = () => (
       <BlockMath>
         {"P(\\bar{X}_{\\Delta} \\geq \\bar{x}_{\\Delta} | H_{1}) \\leq P(\\bar{X}_{\\Delta} \\geq \\bar{x}_{\\text{crit}} | H_{1}) = 1-\\beta"}
       </BlockMath>
+
+      blah
     </p>
   </div>
 );
