@@ -37,9 +37,6 @@ function App() {
             text=" Use this calculator to determine the necessary sample size for running experiments concerned with assessing the difference in means. Examples: Average Session Duration, Revenue per User, Customer Lifetime Value (CLV), Time to Conversion."
           />
           <ContinuousCalculatorState /> {/* Use the parent component here */}
-          <ExpandableContent title="How does this work?">
-            <BinaryCalculatorContent />
-          </ExpandableContent>
         </div>
       </div>
     </div>
