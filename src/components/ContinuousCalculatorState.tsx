@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ContinuousSampleSizeCalculator from "./ContinuousSampleSizeCalculator";
 import NormalDistributionChart from "./NormalDistributionChart";
+import ExpandableContent from "./ExpandableContent";
+import BinaryCalculatorContent from "../content/BinaryCalculatorContent";
 
 const ContinuousCalculatorState: React.FC = () => {
   const [avg, setAvg] = useState<string>("7000");
@@ -33,6 +35,9 @@ const ContinuousCalculatorState: React.FC = () => {
         delta={delta}
         setDelta={setDelta}
       />
+      <ExpandableContent title="How does this work?">
+        <BinaryCalculatorContent />
+      </ExpandableContent>
       <NormalDistributionChart mean={mean} variance={variance} alternativeMean={alternativeMean} />
     </div>
   );
