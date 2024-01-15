@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import BinaryCalculatorContent from "./content/BinaryCalculatorContent";
 import BinarySampleSizeCalculator from "./components/BinarySampleSizeCalculator";
 import CalculatorContext from "./components/CalculatorContext";
@@ -36,7 +37,8 @@ function App() {
             title="Continuous Sample Size Calculator"
             text=" Use this calculator to determine the necessary sample size for running experiments concerned with assessing the difference in means. Examples: Average Session Duration, Revenue per User, Customer Lifetime Value (CLV), Time to Conversion."
           />
-          <ContinuousCalculatorState /> {/* Use the parent component here */}
+          <ContinuousCalculatorState />
+          <Analytics />
         </div>
       </div>
     </div>
