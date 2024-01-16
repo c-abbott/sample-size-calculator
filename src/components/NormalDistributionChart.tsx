@@ -82,22 +82,24 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
     return { data, altData };
   };
 
-  const calculateCriticalValues = (alpha: number, mean: number, sd: number): number[] => {
+  const calculateCriticalValues = (
+    alpha: number,
+    mean: number,
+    sd: number
+  ): number[] => {
     // Calculate z_alpha for a two-tailed test
     const zAlpha = d3.quantile(d3.range(-3, 3, 0.001), 1 - alpha / 2);
-  
-   
+
     // Check if zAlpha or zBeta is undefined or not a number
     if (typeof zAlpha !== "number") {
       throw new Error("Failed to calculate critical z-values");
     }
-  
+
     return [
-      mean - zAlpha * sd,        // Critical value for alpha
-      mean + zAlpha * sd,        // Critical value for alpha
+      mean - zAlpha * sd, // Critical value for alpha
+      mean + zAlpha * sd, // Critical value for alpha
     ];
   };
-  
 
   // Draw Chart Function
   const drawChart = (data: DataPoint[], altData: DataPoint[]) => {
@@ -151,15 +153,35 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
 
       const drawCriticalLines = (criticalValues: number[]) => {
         criticalValues.forEach((criticalValue: number) => {
+          // Drawing the line
           chartGroup
             .append("line")
             .attr("x1", x(criticalValue))
             .attr("y1", 0)
             .attr("x2", x(criticalValue))
             .attr("y2", height)
-            .attr("stroke", "#bcfd49")
+            .attr("stroke", "#e0e0e0") // Lighter shade for the line
             .attr("stroke-width", 2)
             .attr("stroke-dasharray", "5,5");
+
+          // Adding labels
+          chartGroup
+            .append("text")
+            .attr("x", x(criticalValue))
+            .attr("y", 20) // Adjust this value to position the label appropriately
+            .attr("text-anchor", "end") // Align the end of the text to the x position
+            .style("font-size", "12px")
+            .style("fill", "#e0e0e0") // Text color
+            .text(`X = ${criticalValue.toFixed(2)}`); // Label text
+
+          chartGroup
+            .append("text")
+            .attr("x", x(criticalValue)) // Position slightly to the right of the main text
+            .attr("y", 25) // Position slightly below the main text
+            .attr("text-anchor", "start") // Align the start of the text to the new x position
+            .style("font-size", "9px") // Smaller font size for subscript
+            .style("fill", "#e0e0e0") // Text color
+            .text("crit"); // Subscript text
         });
       };
 
@@ -172,7 +194,7 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
       const criticalValues = calculateCriticalValues(
         0.05,
         mean,
-        Math.sqrt(variance),
+        Math.sqrt(variance)
       );
       drawCriticalLines(criticalValues);
 
