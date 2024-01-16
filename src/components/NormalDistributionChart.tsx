@@ -82,10 +82,26 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
     return { data, altData };
   };
 
-    // Function to calculate critical z-values
-  const calculateCriticalValues = (confidenceLevel: any, mean: any, standardDeviation: any) => {
-    const z_val = d3.quantile(d3.range(-3, 3, 0.001), 1 - (1 - confidenceLevel) / 2);
-    return [mean + z_val * standardDeviation, mean - z_val * standardDeviation];
+  // Function to calculate critical z-values with a check for undefined
+  const calculateCriticalValues = (
+    confidenceLevel: number,
+    mean: number,
+    standardDeviation: number
+  ): number[] => {
+    const zValue = d3.quantile(
+      d3.range(-3, 3, 0.001),
+      1 - (1 - confidenceLevel) / 2
+    );
+
+    // Check if zValue is undefined or not a number
+    if (typeof zValue !== "number") {
+      throw new Error("Failed to calculate critical z-value");
+    }
+
+    return [
+      mean + zValue * standardDeviation,
+      mean - zValue * standardDeviation,
+    ];
   };
 
   // Draw Chart Function
@@ -139,8 +155,9 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
       };
 
       const drawCriticalLines = (criticalValues: any) => {
-        criticalValues.forEach(criticalValue => {
-          chartGroup.append("line")
+        criticalValues.forEach((criticalValue) => {
+          chartGroup
+            .append("line")
             .attr("x1", x(criticalValue))
             .attr("y1", 0)
             .attr("x2", x(criticalValue))
@@ -157,9 +174,12 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
       }
 
       // Example: Drawing critical lines for a 95% confidence level
-      const criticalValues = calculateCriticalValues(0.95, mean, Math.sqrt(variance));
+      const criticalValues = calculateCriticalValues(
+        0.95,
+        mean,
+        Math.sqrt(variance)
+      );
       drawCriticalLines(criticalValues);
-
 
       chartGroup
         .append("g")
