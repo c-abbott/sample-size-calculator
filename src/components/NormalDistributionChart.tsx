@@ -177,7 +177,7 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
             .attr("y1", 0)
             .attr("x2", x(criticalValue))
             .attr("y2", height)
-            .attr("stroke", "#e0e0e0") // Lighter shade for the line
+            .attr("stroke", "#d6fd91") // Lighter shade for the line
             .attr("stroke-width", 2)
             .attr("stroke-dasharray", "5,5");
 
@@ -188,7 +188,7 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
             .attr("y", 20) // Adjust this value to position the label appropriately
             .attr("text-anchor", "end") // Align the end of the text to the x position
             .style("font-size", "12px")
-            .style("fill", "#e0e0e0") // Text color
+            .style("fill", "#d6fd91") // Text color
             .text(`X`); // Label text
 
           chartGroup
@@ -197,7 +197,7 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
             .attr("y", 25) // Position slightly below the main text
             .attr("text-anchor", "start") // Align the start of the text to the new x position
             .style("font-size", "9px") // Smaller font size for subscript
-            .style("fill", "#e0e0e0") // Text color
+            .style("fill", "#d6fd91") // Text color
             .text("crit"); // Subscript text
         });
       };
