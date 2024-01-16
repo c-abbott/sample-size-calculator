@@ -82,6 +82,12 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
     return { data, altData };
   };
 
+    // Function to calculate critical z-values
+  const calculateCriticalValues = (confidenceLevel: any, mean: any, standardDeviation: any) => {
+    const z_val = d3.quantile(d3.range(-3, 3, 0.001), 1 - (1 - confidenceLevel) / 2);
+    return [mean + z_val * standardDeviation, mean - z_val * standardDeviation];
+  };
+
   // Draw Chart Function
   const drawChart = (data: DataPoint[], altData: DataPoint[]) => {
     if (d3Container.current && d3Container.current.parentElement) {
@@ -132,10 +138,28 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
           .attr("stroke-dashoffset", 0);
       };
 
+      const drawCriticalLines = (criticalValues: any) => {
+        criticalValues.forEach(criticalValue => {
+          chartGroup.append("line")
+            .attr("x1", x(criticalValue))
+            .attr("y1", 0)
+            .attr("x2", x(criticalValue))
+            .attr("y2", height)
+            .attr("stroke", "red")
+            .attr("stroke-width", 2)
+            .attr("stroke-dasharray", "5,5");
+        });
+      };
+
       drawDistribution(data, "#bcfd49");
       if (alternativeMean !== undefined) {
         drawDistribution(altData, "#a970fd");
       }
+
+      // Example: Drawing critical lines for a 95% confidence level
+      const criticalValues = calculateCriticalValues(0.95, mean, Math.sqrt(variance));
+      drawCriticalLines(criticalValues);
+
 
       chartGroup
         .append("g")
