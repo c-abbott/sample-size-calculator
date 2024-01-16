@@ -126,6 +126,23 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
+      // Function to calculate proportional padding
+      const calculatePadding = (
+        containerWidth: number,
+        containerHeight: number
+      ) => {
+        return {
+          horizontalPadding: containerWidth * 0.01, // 2% of container width
+          verticalPadding: containerHeight * 0.01, // 4% of container height
+        };
+      };
+
+      // Calculate dynamic padding based on the container's dimensions
+      const { horizontalPadding, verticalPadding } = calculatePadding(
+        containerWidth,
+        height
+      );
+
       const drawDistribution = (
         distributionData: DataPoint[],
         color: string
@@ -167,16 +184,16 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
           // Adding labels
           chartGroup
             .append("text")
-            .attr("x", x(criticalValue))
+            .attr("x", x(criticalValue) - 1.5*horizontalPadding)
             .attr("y", 20) // Adjust this value to position the label appropriately
             .attr("text-anchor", "end") // Align the end of the text to the x position
             .style("font-size", "12px")
             .style("fill", "#e0e0e0") // Text color
-            .text(`X = ${criticalValue.toFixed(2)}`); // Label text
+            .text(`X`); // Label text
 
           chartGroup
             .append("text")
-            .attr("x", x(criticalValue)) // Position slightly to the right of the main text
+            .attr("x", x(criticalValue) - 1.5*horizontalPadding) // Position slightly to the right of the main text
             .attr("y", 25) // Position slightly below the main text
             .attr("text-anchor", "start") // Align the start of the text to the new x position
             .style("font-size", "9px") // Smaller font size for subscript
