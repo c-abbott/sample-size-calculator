@@ -1,5 +1,8 @@
 import * as d3 from "d3";
 
+export const margin = { top: 16, right: 48, bottom: 24, left: 48 };
+export const height = 500 - margin.top - margin.bottom;
+
 export interface DataPoint {
   x: number;
   y: number;
