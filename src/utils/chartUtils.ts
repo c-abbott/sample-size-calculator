@@ -8,6 +8,11 @@ export interface DataPoint {
   y: number;
 }
 
+export interface ChartData {
+  data: DataPoint[];
+  altData: DataPoint[];
+}
+
 export const generateData = (
   mean: number,
   standardDeviation: number,
@@ -23,7 +28,10 @@ export const generateData = (
     }));
 };
 
-export const normalizeData = (data: DataPoint[], height: number): DataPoint[] => {
+export const normalizeData = (
+  data: DataPoint[],
+  height: number
+): DataPoint[] => {
   const maxY = d3.max(data, (d) => d.y) || 1;
   return data.map((d) => ({
     x: d.x,
