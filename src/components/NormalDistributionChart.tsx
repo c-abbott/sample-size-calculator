@@ -1,7 +1,14 @@
 import React, { useEffect, useRef, useState, useMemo } from "react";
 import * as d3 from "d3";
 import { select } from "d3-selection";
-import { DataPoint, generateData, normalizeData, calculateCriticalValues, margin, height } from "../utils/chartUtils"
+import {
+  DataPoint,
+  generateData,
+  normalizeData,
+  calculateCriticalValues,
+  margin,
+  height,
+} from "../utils/chartUtils";
 
 interface NormalDistributionChartProps {
   mean?: number;
@@ -13,7 +20,6 @@ interface ChartData {
   data: DataPoint[];
   altData: DataPoint[];
 }
-
 
 // Component
 const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
