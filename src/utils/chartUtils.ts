@@ -43,17 +43,18 @@ export const calculateCriticalValues = (
   alpha: number,
   mean: number,
   sd: number
-): number[] => {
-  // Calculate z_alpha for a two-tailed test
-  const zAlpha = d3.quantile(d3.range(-3, 3, 0.001), 1 - alpha / 2);
-
-  // Check if zAlpha or zBeta is undefined or not a number
-  if (typeof zAlpha !== "number") {
-    throw new Error("Failed to calculate critical z-values");
+): number[] | undefined => {
+  try {
+    const zAlpha = d3.quantile(d3.range(-3, 3, 0.001), 1 - alpha / 2);
+    if (typeof zAlpha !== "number") {
+      throw new Error("Failed to calculate critical z-values");
+    }
+    return [
+      mean - zAlpha * sd, // Critical value for alpha
+      mean + zAlpha * sd, // Critical value for alpha
+    ];
+  } catch (error) {
+    console.error(error);
+    return undefined; 
   }
-
-  return [
-    mean - zAlpha * sd, // Critical value for alpha
-    mean + zAlpha * sd, // Critical value for alpha
-  ];
 };

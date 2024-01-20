@@ -126,7 +126,14 @@ const useDrawChart = (
         mean,
         Math.sqrt(variance)
       );
-      drawCriticalLines(criticalValues);
+      
+      if (criticalValues) {
+        drawCriticalLines(criticalValues);
+      } else {
+        console.error(
+          "Critical values are undefined. Critical lines will not be drawn."
+        );
+      }
 
       chartGroup
         .append("g")
