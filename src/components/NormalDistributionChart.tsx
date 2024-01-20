@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useMemo } from "react";
 import useDrawChart from "../hooks/useDrawChart";
+import { debounce } from "../utils/debounce";
 import {
   generateData,
   normalizeData,
@@ -59,7 +60,7 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
 
   useEffect(() => {
     draw();
-    const handleResize = () => draw();
+    const handleResize = debounce(() => draw(), 500); // Debounce with a 500ms delay
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [chartData, draw]);
