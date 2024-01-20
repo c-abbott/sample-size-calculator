@@ -1,17 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import * as d3 from "d3";
 import { select } from "d3-selection";
-
-// Interfaces
-interface DataPoint {
-  x: number;
-  y: number;
-}
-
-interface ChartData {
-  data: DataPoint[];
-  altData: DataPoint[];
-}
+import { DataPoint, generateData, normalizeData, calculateCriticalValues, margin, height } from "../utils/chartUtils"
 
 interface NormalDistributionChartProps {
   mean?: number;
@@ -19,29 +9,11 @@ interface NormalDistributionChartProps {
   alternativeMean?: number;
 }
 
-// Utility Functions
-const generateData = (
-  mean: number,
-  standardDeviation: number,
-  xRange: number
-): DataPoint[] => {
-  return d3
-    .range(mean - xRange, mean + xRange, standardDeviation / 100)
-    .map((xVal) => ({
-      x: xVal,
-      y:
-        (1 / (standardDeviation * Math.sqrt(2 * Math.PI))) *
-        Math.exp(-0.5 * ((xVal - mean) / standardDeviation) ** 2),
-    }));
-};
+interface ChartData {
+  data: DataPoint[];
+  altData: DataPoint[];
+}
 
-const normalizeData = (data: DataPoint[], height: number): DataPoint[] => {
-  const maxY = d3.max(data, (d) => d.y) || 1;
-  return data.map((d) => ({
-    x: d.x,
-    y: (d.y / maxY) * height * 0.95,
-  }));
-};
 
 // Component
 const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
@@ -55,15 +27,7 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
     altData: [],
   });
 
-  // Chart Configurations
-  const margin = { top: 16, right: 48, bottom: 24, left: 48 };
-  const height = 500 - margin.top - margin.bottom;
-
-  const generateChartData = (
-    mean: number,
-    variance: number,
-    alternativeMean?: number
-  ): ChartData => {
+  const memoizedChartData = useMemo(() => {
     const standardDeviation = Math.sqrt(variance);
     const xRange = 4 * standardDeviation;
 
@@ -80,26 +44,7 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
         : [];
 
     return { data, altData };
-  };
-
-  const calculateCriticalValues = (
-    alpha: number,
-    mean: number,
-    sd: number
-  ): number[] => {
-    // Calculate z_alpha for a two-tailed test
-    const zAlpha = d3.quantile(d3.range(-3, 3, 0.001), 1 - alpha / 2);
-
-    // Check if zAlpha or zBeta is undefined or not a number
-    if (typeof zAlpha !== "number") {
-      throw new Error("Failed to calculate critical z-values");
-    }
-
-    return [
-      mean - zAlpha * sd, // Critical value for alpha
-      mean + zAlpha * sd, // Critical value for alpha
-    ];
-  };
+  }, [mean, variance, alternativeMean]);
 
   // Draw Chart Function
   const drawChart = (data: DataPoint[], altData: DataPoint[]) => {
@@ -225,9 +170,8 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
   };
 
   useEffect(() => {
-    const newData = generateChartData(mean, variance, alternativeMean);
-    setChartData(newData);
-  }, [mean, variance, alternativeMean]);
+    setChartData(memoizedChartData);
+  }, [memoizedChartData]);
 
   useEffect(() => {
     drawChart(chartData.data, chartData.altData);

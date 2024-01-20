@@ -8,7 +8,7 @@ export interface DataPoint {
   y: number;
 }
 
-const generateData = (
+export const generateData = (
   mean: number,
   standardDeviation: number,
   xRange: number
@@ -23,7 +23,7 @@ const generateData = (
     }));
 };
 
-const normalizeData = (data: DataPoint[], height: number): DataPoint[] => {
+export const normalizeData = (data: DataPoint[], height: number): DataPoint[] => {
   const maxY = d3.max(data, (d) => d.y) || 1;
   return data.map((d) => ({
     x: d.x,
@@ -31,7 +31,7 @@ const normalizeData = (data: DataPoint[], height: number): DataPoint[] => {
   }));
 };
 
-const calculateCriticalValues = (
+export const calculateCriticalValues = (
   alpha: number,
   mean: number,
   sd: number
