@@ -50,7 +50,6 @@ export const calculateCriticalValues = (
       throw new Error("Failed to calculate critical z-values");
     }
     return [
-      mean - zAlpha * sd, // Critical value for alpha
       mean + zAlpha * sd, // Critical value for alpha
     ];
   } catch (error) {
