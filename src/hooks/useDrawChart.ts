@@ -120,9 +120,9 @@ const useDrawChart = (
         drawDistribution(altData, "#a970fd");
       }
 
-      // Example: Drawing critical lines for a 95% confidence level
+      // Example: Drawing critical lines for a 90% confidence level
       const criticalValues = calculateCriticalValues(
-        0.05,
+        0.10,
         mean,
         Math.sqrt(variance)
       );
