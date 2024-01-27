@@ -13,7 +13,8 @@ const useDrawChart = (
   altData: DataPoint[],
   mean: number,
   variance: number,
-  alternativeMean?: number
+  alternativeMean?: number,
+  alpha: number = 0.05
 ) => {
   const drawChart = () => {
     if (d3Container.current && d3Container.current.parentElement) {
@@ -122,7 +123,7 @@ const useDrawChart = (
 
       // Example: Drawing critical lines for a 90% confidence level
       const criticalValues = calculateCriticalValues(
-        0.10,
+        alpha,
         mean,
         Math.sqrt(variance)
       );
