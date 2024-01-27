@@ -45,7 +45,7 @@ export const calculateCriticalValues = (
   sd: number
 ): number[] | undefined => {
   try {
-    const zAlpha = d3.quantile(d3.range(-3, 3, 0.001), 1 - alpha / 2);
+    const zAlpha = d3.quantile(d3.range(-3, 3, 0.001), 1 - alpha);
     if (typeof zAlpha !== "number") {
       throw new Error("Failed to calculate critical z-values");
     }

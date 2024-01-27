@@ -108,7 +108,7 @@ const ContinuousSampleSizeCalculator: React.FC<
               value={alpha}
               onChange={(e) => setAlpha(e.target.value)}
               min={1}
-              max={20}
+              max={40}
               tooltipText="The probability of a Type I error, or false positive. This is the probability that you will detect a difference when one does not actually exist."
             />
             <PercentageSlider
