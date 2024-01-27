@@ -21,7 +21,18 @@ interface ContinuousSampleSizeCalculatorProps {
 
 const ContinuousSampleSizeCalculator: React.FC<
   ContinuousSampleSizeCalculatorProps
-> = ({ avg, setAvg, sd, setSd, delta, setDelta, alpha, setAlpha, beta, setBeta }) => {
+> = ({
+  avg,
+  setAvg,
+  sd,
+  setSd,
+  delta,
+  setDelta,
+  alpha,
+  setAlpha,
+  beta,
+  setBeta,
+}) => {
   const [sampleSize, setSampleSize] = useState<number | null>(null);
   const handleDeltaChange = (value: string) => {
     const numericValue = parseFloat(value.replace(/,/g, ""));

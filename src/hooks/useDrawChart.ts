@@ -94,7 +94,10 @@ const useDrawChart = (
           .attr("stroke-dashoffset", 0);
       };
 
-      const drawCriticalLines = (criticalValues: number[], color: string="#d6fd91") => {
+      const drawCriticalLines = (
+        criticalValues: number[],
+        color: string = "#d6fd91"
+      ) => {
         criticalValues.forEach((criticalValue: number) => {
           // Drawing the line
           chartGroup
