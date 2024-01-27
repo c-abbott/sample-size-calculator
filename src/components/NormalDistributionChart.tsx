@@ -13,6 +13,7 @@ interface NormalDistributionChartProps {
   variance?: number;
   alternativeMean?: number;
   alpha?: number;
+  beta?: number;
 }
 
 // Component
@@ -21,6 +22,7 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
   variance = 1,
   alternativeMean = 1,
   alpha = 0.05,
+  beta = 0.20,
 }) => {
   const d3Container = useRef<SVGSVGElement | null>(null);
   const [chartData, setChartData] = useState<ChartData>({
@@ -54,7 +56,8 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
     mean,
     variance,
     alternativeMean,
-    alpha
+    alpha,
+    beta
   );
 
   useEffect(() => {

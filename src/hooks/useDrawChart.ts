@@ -1,7 +1,8 @@
 import { select } from "d3-selection";
 import {
   DataPoint,
-  calculateCriticalValues,
+  calculateCriticalZAlpha,
+  calculateCriticalZBeta,
   margin,
   height,
 } from "../utils/chartUtils";
@@ -13,8 +14,9 @@ const useDrawChart = (
   altData: DataPoint[],
   mean: number,
   variance: number,
-  alternativeMean?: number,
-  alpha: number = 0.05
+  alternativeMean: number,
+  alpha: number = 0.05,
+  beta: number = 0.2
 ) => {
   const drawChart = () => {
     if (d3Container.current && d3Container.current.parentElement) {
@@ -23,7 +25,17 @@ const useDrawChart = (
       const containerWidth = d3Container.current.parentElement.offsetWidth;
       const width = containerWidth - margin.left - margin.right;
       const standardDeviation = Math.sqrt(variance);
-      const xRange = 4 * standardDeviation;
+      const criticalValuesAlpha = calculateCriticalZAlpha(
+        alpha,
+        mean,
+        Math.sqrt(variance)
+      );
+      const criticalValuesBeta = calculateCriticalZBeta(
+        beta,
+        alternativeMean,
+        Math.sqrt(variance)
+      );
+      const xRange = 3 * standardDeviation;
       let minX = mean - xRange;
       let maxX = mean + xRange;
 
@@ -82,7 +94,7 @@ const useDrawChart = (
           .attr("stroke-dashoffset", 0);
       };
 
-      const drawCriticalLines = (criticalValues: number[]) => {
+      const drawCriticalLines = (criticalValues: number[], color: string="#d6fd91") => {
         criticalValues.forEach((criticalValue: number) => {
           // Drawing the line
           chartGroup
@@ -91,7 +103,7 @@ const useDrawChart = (
             .attr("y1", 0)
             .attr("x2", x(criticalValue))
             .attr("y2", height)
-            .attr("stroke", "#d6fd91") // Lighter shade for the line
+            .attr("stroke", color) // Lighter shade for the line
             .attr("stroke-width", 2)
             .attr("stroke-dasharray", "5,5");
 
@@ -121,18 +133,20 @@ const useDrawChart = (
         drawDistribution(altData, "#a970fd");
       }
 
-      // Example: Drawing critical lines for a 90% confidence level
-      const criticalValues = calculateCriticalValues(
-        alpha,
-        mean,
-        Math.sqrt(variance)
-      );
-
-      if (criticalValues) {
-        drawCriticalLines(criticalValues);
+      if (criticalValuesAlpha) {
+        drawCriticalLines(criticalValuesAlpha);
       } else {
         console.error(
           "Critical values are undefined. Critical lines will not be drawn."
+        );
+      }
+
+      // Drawing logic for critical beta region
+      if (criticalValuesBeta) {
+        drawCriticalLines(criticalValuesBeta, "#a970fd");
+      } else {
+        console.error(
+          "Critical beta value is undefined. Beta region will not be drawn."
         );
       }
 

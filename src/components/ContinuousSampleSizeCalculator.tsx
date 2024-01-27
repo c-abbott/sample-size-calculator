@@ -15,12 +15,13 @@ interface ContinuousSampleSizeCalculatorProps {
   setDelta: (value: string) => void;
   alpha: string;
   setAlpha: (value: string) => void;
+  beta: string;
+  setBeta: (value: string) => void;
 }
 
 const ContinuousSampleSizeCalculator: React.FC<
   ContinuousSampleSizeCalculatorProps
-> = ({ avg, setAvg, sd, setSd, delta, setDelta, alpha, setAlpha }) => {
-  const [power, setPower] = useState<string>("80");
+> = ({ avg, setAvg, sd, setSd, delta, setDelta, alpha, setAlpha, beta, setBeta }) => {
   const [sampleSize, setSampleSize] = useState<number | null>(null);
   const handleDeltaChange = (value: string) => {
     const numericValue = parseFloat(value.replace(/,/g, ""));
@@ -39,7 +40,7 @@ const ContinuousSampleSizeCalculator: React.FC<
 
   useEffect(() => {
     // Check if any of the required fields is empty
-    if (!delta || !avg || !sd || !alpha || !power) {
+    if (!delta || !avg || !sd || !alpha || !beta) {
       setSampleSize(null);
       return; // Exit the effect if any field is empty
     }
@@ -48,7 +49,7 @@ const ContinuousSampleSizeCalculator: React.FC<
     const numAvg = parseFloat(avg) || NaN;
     const numSd = parseFloat(sd) || NaN;
     const numAlpha = parseFloat(alpha) / 100 || NaN;
-    const numBeta = 1 - parseFloat(power) / 100 || NaN;
+    const numBeta = parseFloat(beta) / 100 || NaN;
 
     // Check if any of the parsed values is NaN (not a number)
     if (
@@ -70,7 +71,7 @@ const ContinuousSampleSizeCalculator: React.FC<
       );
       setSampleSize(size);
     }
-  }, [delta, avg, sd, alpha, power]); // Dependencies array
+  }, [delta, avg, sd, alpha, beta]); // Dependencies array
 
   return (
     <div className="py-4 bg-dark-900 text-primary">
@@ -112,11 +113,11 @@ const ContinuousSampleSizeCalculator: React.FC<
               tooltipText="The probability of a Type I error, or false positive. This is the probability that you will detect a difference when one does not actually exist."
             />
             <PercentageSlider
-              label="Power (1-β)"
-              value={power}
-              onChange={(e) => setPower(e.target.value)}
-              min={50}
-              max={100}
+              label="Beta (β)"
+              value={beta}
+              onChange={(e) => setBeta(e.target.value)}
+              min={1}
+              max={40}
               tooltipText="The probability of a Type II error, or false negative. This is the probability that you will fail to detect a difference when one actually exists."
             />
           </div>

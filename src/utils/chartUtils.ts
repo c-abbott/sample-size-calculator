@@ -39,7 +39,7 @@ export const normalizeData = (
   }));
 };
 
-export const calculateCriticalValues = (
+export const calculateCriticalZAlpha = (
   alpha: number,
   mean: number,
   sd: number
@@ -49,11 +49,33 @@ export const calculateCriticalValues = (
     if (typeof zAlpha !== "number") {
       throw new Error("Failed to calculate critical z-values");
     }
+    return[
+      mean + zAlpha * sd
+    ]
+  } catch (error) {
+    console.error(error);
+    return undefined;
+  }
+};
+export const calculateCriticalZBeta = (
+  beta: number,
+  mean: number,
+  sd: number
+): number[] | undefined => {
+  try {
+    // Calculate the z-score for beta. This is for a one-tailed test.
+    // For a two-tailed test, you might use beta / 2.
+    const zBeta = d3.quantile(d3.range(-3, 3, 0.001), 1 - beta);
+
+    if (typeof zBeta !== "number") {
+      throw new Error("Failed to calculate zBeta");
+    }
+
     return [
-      mean + zAlpha * sd, // Critical value for alpha
+      mean + zBeta * sd
     ];
   } catch (error) {
     console.error(error);
-    return undefined; 
+    return undefined;
   }
 };

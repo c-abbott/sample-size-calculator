@@ -12,6 +12,7 @@ const ContinuousCalculatorState: React.FC = () => {
   const [delta, setDelta] = useState<string>("5");
   const [alternativeMean, setAlternativeMean] = useState<number>(0);
   const [alpha, setAlpha] = useState<string>("5");
+  const [beta, setBeta] = useState<string>("20");
 
   useEffect(() => {
     const numAvg = parseFloat(avg) || 0;
@@ -37,6 +38,8 @@ const ContinuousCalculatorState: React.FC = () => {
         setDelta={setDelta}
         alpha={alpha}
         setAlpha={setAlpha}
+        beta={beta}
+        setBeta={setBeta}
       />
       <ExpandableContent title="How does this work?">
         <BinaryCalculatorContent />
@@ -46,6 +49,7 @@ const ContinuousCalculatorState: React.FC = () => {
         variance={variance}
         alternativeMean={alternativeMean}
         alpha={parseFloat(alpha) / 100}
+        beta={parseFloat(beta) / 100}
       />
     </div>
   );
