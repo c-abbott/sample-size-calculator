@@ -41,7 +41,12 @@ const ContinuousCalculatorState: React.FC = () => {
       <ExpandableContent title="How does this work?">
         <BinaryCalculatorContent />
       </ExpandableContent>
-      <NormalDistributionChart mean={mean} variance={variance} alternativeMean={alternativeMean} alpha={parseFloat(alpha) / 100}/>
+      <NormalDistributionChart
+        mean={mean}
+        variance={variance}
+        alternativeMean={alternativeMean}
+        alpha={parseFloat(alpha) / 100}
+      />
     </div>
   );
 };

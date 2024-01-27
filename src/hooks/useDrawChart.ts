@@ -127,7 +127,7 @@ const useDrawChart = (
         mean,
         Math.sqrt(variance)
       );
-      
+
       if (criticalValues) {
         drawCriticalLines(criticalValues);
       } else {

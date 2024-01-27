@@ -54,7 +54,7 @@ const NormalDistributionChart: React.FC<NormalDistributionChartProps> = ({
     mean,
     variance,
     alternativeMean,
-    alpha,
+    alpha
   );
 
   useEffect(() => {
